@@ -6,15 +6,15 @@
 }:
 let
   extraPatches = [
-      ./mt7986-default-bootcmd.patch
-      ./mt7986-persistent-mac-from-cpu-uid.patch
-      ./mt7986-persistent-wlan-mac-from-cpu-uid.patch
-    ];
+    ./mt7986-default-bootcmd.patch
+    ./mt7986-persistent-mac-from-cpu-uid.patch
+    ./mt7986-persistent-wlan-mac-from-cpu-uid.patch
+  ];
 in
 {
   ubootBananaPiR3 = (buildUBoot {
     defconfig = "mt7986a_bpir3_sd_defconfig";
-    extraMeta.platforms = ["aarch64-linux"];
+    extraMeta.platforms = [ "aarch64-linux" ];
     extraPatches = extraPatches;
     extraConfig = ''
       CONFIG_DISTRO_DEFAULTS=y

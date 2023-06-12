@@ -12,7 +12,7 @@
   armTrustedFirmwareMT7986 = (buildArmTrustedFirmware rec {
     extraMakeFlags = [ "USE_MKIMAGE=1" "DRAM_USE_DDR4=1" "BOOT_DEVICE=sdmmc" "BL33=${ubootBananaPiR3}/u-boot.bin" "all" "fip" ];
     platform = "mt7986";
-    extraMeta.platforms = ["aarch64-linux"];
+    extraMeta.platforms = [ "aarch64-linux" ];
     filesToInstall = [ "build/${platform}/release/bl2.img" "build/${platform}/release/fip.bin" ];
   }).overrideAttrs (oldAttrs: {
     src = fetchFromGitHub {
