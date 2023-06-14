@@ -21,6 +21,7 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
   };
+  programs.zsh.enable=true;
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";

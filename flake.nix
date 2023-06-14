@@ -1,10 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    ghostbuster = {
-      url = "github:ghostbuster91/dot-files";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,6 +10,7 @@
   outputs =
     { self
     , nixpkgs
+    , home-manager
     , ...
     }@attrs:
     let
@@ -58,7 +55,7 @@
             }
             # flake registry
             {
-              nix.registry.nixpkgs.flake = inputs.nixpkgs;
+              nix.registry.nixpkgs.flake = nixpkgs;
             }
           ];
         };

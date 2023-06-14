@@ -96,7 +96,7 @@ in
 
       nvim-neoclip-lua
       indent-blankline-nvim
-      nvim-tree # change to nvim-tree
+      nvim-tree-lua
       telescope-ui-select-nvim
       noice-nvim
       nui-nvim

@@ -8,11 +8,6 @@ set wildcharm=<C-Z>
 
 set termguicolors
 
-cnoremap <expr> <Up>    pumvisible() ? "\<Left>"  : "\<Up>"
-cnoremap <expr> <Down>  pumvisible() ? "\<Right>" : "\<Down>"
-cnoremap <expr> <Left>  pumvisible() ? "\<Up>"    : "\<Left>"
-cnoremap <expr> <Right> pumvisible() ? "\<Down>"  : "\<Right>"
-
 "This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <ESC> :noh<ESC>
 
@@ -37,3 +32,8 @@ autocmd VimEnter * :clearjumps
 "When a file has been detected to have been changed outside of Vim
 "and it has not been changed inside of Vim, automatically read it again.
 :set autoread
+
+nnoremap <silent> <A-up> :wincmd k<CR>
+nnoremap <silent> <A-down> :wincmd j<CR>
+nnoremap <silent> <A-left> :wincmd h<CR>
+nnoremap <silent> <A-right> :wincmd l<CR>
