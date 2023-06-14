@@ -11,15 +11,15 @@
   networking.interfaces.br0.useDHCP = true;
 
   services.openssh.enable = true;
-  # For initial setup
-  users.users.root.password = "bananapi";
-  services.openssh.settings.PermitRootLogin = "yes";
+  services.openssh.settings.PermitRootLogin = "no";
+  services.openssh.settings.PasswordAuthentication = false;
   users.users.kghost = {
     name = "kghost";
     home = "/home/kghost";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFFeU4GXH+Ae00DipGGJN7uSqPJxWFmgRo9B+xjV3mK4"];
   };
   programs.zsh.enable=true;
 
