@@ -1,4 +1,4 @@
-({ lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   system.stateVersion = lib.mkDefault "22.11";
   networking.hostName = "bpir3";
 
@@ -14,6 +14,13 @@
   # For initial setup
   users.users.root.password = "bananapi";
   services.openssh.settings.PermitRootLogin = "yes";
+  users.users.kghost = {
+    name = "kghost";
+    home = "/home/kghost";
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.zsh;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
@@ -35,7 +42,7 @@
 
     neofetch
     nnn # terminal file manager
-    btop # replacement of htop/nmon
+    bottom # replacement of htop/nmon
     htop
     iotop
     iftop
@@ -65,7 +72,6 @@
     p7zip
 
     # misc
-    viu # terminal image viewer
     file
     which
     tree
@@ -76,4 +82,4 @@
 
   # replace default editor with neovim
   environment.variables.EDITOR = "nvim";
-})
+}
