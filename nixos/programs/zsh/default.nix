@@ -1,4 +1,4 @@
-{ pkgs, config, lib, pkgs-unstable, ... }: {
+{ pkgs, config, lib, ... }: {
   programs.starship = import ./starship.nix { inherit lib; };
   programs.zsh = {
     enable = true;
@@ -9,16 +9,16 @@
     plugins = [
       {
         name = "fzf-tab";
-        src = "${pkgs-unstable.zsh-fzf-tab}/share/fzf-tab";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
       {
         name = "zsh-you-should-use";
-        src = pkgs-unstable.zsh-you-should-use;
+        src = pkgs.zsh-you-should-use;
         file = "share/zsh/plugins/you-should-use/you-should-use.plugin.zsh";
       }
       {
         name = "zsh-nix-shell";
-        src = pkgs-unstable.zsh-nix-shell;
+        src = pkgs.zsh-nix-shell;
         file = "share/zsh-nix-shell/nix-shell.plugin.zsh";
       }
     ];
@@ -80,13 +80,13 @@
     '';
 
     localVariables = {
-      FZF_DEFAULT_COMMAND = "${pkgs-unstable.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules --exclude '*.class'";
-      FZF_CTRL_T_OPTS = "--ansi --preview '${pkgs-unstable.bat}/bin/bat --style=numbers --color=always --line-range :500 {}'";
-      FZF_CTRL_T_COMMAND = "${pkgs-unstable.fd}/bin/fd -I --type file";
+      FZF_DEFAULT_COMMAND = "${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules --exclude '*.class'";
+      FZF_CTRL_T_OPTS = "--ansi --preview '${pkgs.bat}/bin/bat --style=numbers --color=always --line-range :500 {}'";
+      FZF_CTRL_T_COMMAND = "${pkgs.fd}/bin/fd -I --type file";
     };
     history = { extended = true; };
     shellAliases = {
-      lsd = "${pkgs-unstable.exa}/bin/exa --long --header --git --all";
+      lsd = "${pkgs.exa}/bin/exa --long --header --git --all";
     };
   };
 }

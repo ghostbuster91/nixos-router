@@ -13,7 +13,9 @@
   };
 
   imports = [ ./programs/nvim 
-  ./programs/git];
+  ./programs/git
+./programs/zsh
+  ];
 
   home.packages = with pkgs; [
   ];
