@@ -12,9 +12,10 @@
     EDITOR = "nvim";
   };
 
-  imports = [ ./programs/nvim 
-  ./programs/git
-./programs/zsh
+  imports = [
+    ./programs/nvim
+    ./programs/git
+    ./programs/zsh
   ];
 
   home.packages = with pkgs; [

@@ -1,14 +1,9 @@
 { lib, pkgs, ... }: {
+  imports = [ ./network.nix ];
   system.stateVersion = lib.mkDefault "22.11";
-  networking.hostName = "bpir3";
 
-  networking.useDHCP = false;
-  networking.bridges = {
-    br0 = {
-      interfaces = [ "wan" "lan0" "lan1" "lan2" "lan3" ];
-    };
-  };
-  networking.interfaces.br0.useDHCP = true;
+  powerManagement.cpuFreqGovernor = "ondemand";
+  services.acpid.enable = true;
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "no";
@@ -19,9 +14,9 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFFeU4GXH+Ae00DipGGJN7uSqPJxWFmgRo9B+xjV3mK4"];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFFeU4GXH+Ae00DipGGJN7uSqPJxWFmgRo9B+xjV3mK4" ];
   };
-  programs.zsh.enable=true;
+  programs.zsh.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
