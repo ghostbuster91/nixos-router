@@ -43,7 +43,18 @@ in
         useDHCP = true; # Request an IP from the ISP
       };
     };
-    wireless.enable = true;
+    # wireless = {
+    #   enable = true;
+    #   userControlled.group = "network";
+    #   interfaces = [ "wlan0" "wlan1" ];
+    #   networks = {
+    #     echelon = {
+    #       # SSID with no spaces or special characters
+    #       psk = "abcdefgh"; # (password will be written to /nix/store!)
+    #     };
+    #
+    #   };
+    # };
 
     nat = {
       enable = true;
@@ -57,6 +68,19 @@ in
     };
 
   };
+
+
+  services.hostapd = {
+    enable = true;
+    interface = "wlan0"; # 2.4
+    ssid="bpir3wifi";
+    hwMode="g";
+    driver="nl80211";
+    group="network";
+    countryCode="PL";
+    loglevel=0;
+  };
+
 
   # The service irqbalance is useful as it assigns certain IRQ calls to specific CPUs instead of letting the first CPU core to handle everything. This is supposed to increase performance by hitting CPU cache more often.
   services.irqbalance.enable = true;
