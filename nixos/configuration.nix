@@ -3,7 +3,6 @@
   system.stateVersion = lib.mkDefault "22.11";
 
   powerManagement.cpuFreqGovernor = "ondemand";
-  services.acpid.enable = true;
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "no";
@@ -16,7 +15,14 @@
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFFeU4GXH+Ae00DipGGJN7uSqPJxWFmgRo9B+xjV3mK4" ];
   };
-  programs.zsh.enable = true;
+
+
+  programs = {
+    zsh.enable = true;
+    ssh = {
+      startAgent = true;
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";

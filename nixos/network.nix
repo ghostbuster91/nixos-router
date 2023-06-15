@@ -17,22 +17,28 @@ in
     hostName = "bpir3";
     bridges = {
       br0 = {
-        interfaces = [ "lan0" "lan1" "lan2" "lan3" "wlan0" "wlan1" ];
+        interfaces = [ "lan0" "lan1" "lan2" "lan3" ];
       };
     };
     interfaces = {
       br0 = {
         useDHCP = false;
-      };
-      wguest = {
-        useDHCP = false;
         ipv4.addresses = [
           {
-            address = "192.168.2.1";
+            address = "192.168.10.1";
             prefixLength = 24;
           }
         ];
       };
+      # wguest = {
+      #   useDHCP = false;
+      #   ipv4.addresses = [
+      #     {
+      #       address = "192.168.20.1";
+      #       prefixLength = 24;
+      #     }
+      #   ];
+      # };
       wan = {
         useDHCP = true; # Request an IP from the ISP
       };
@@ -43,7 +49,9 @@ in
       enable = true;
       internalInterfaces = [
         "br0"
-        "wguest"
+        "wlan0"
+        "wlan1"
+        # "wguest"
       ];
       externalInterface = "wan";
     };

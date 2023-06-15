@@ -41,6 +41,11 @@
             [ "from:oh-my-zsh" "at:904f8685f75ff5dd3f544f8c6f2cabb8e5952e9a" ];
         }
         {
+          name = "plugins/ssh-agent";
+          tags =
+            [ "from:oh-my-zsh" "at:904f8685f75ff5dd3f544f8c6f2cabb8e5952e9a" ];
+        }
+        {
           name = "rupa/z";
           tags = [ "use:z.sh" "at:v1.11" ];
         }
