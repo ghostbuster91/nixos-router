@@ -30,7 +30,10 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   # enable flakes globally
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    package = pkgs.nixVersions.stable;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

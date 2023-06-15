@@ -1,5 +1,17 @@
-{ pkgs, config, lib, ... }: {
-  programs.starship = import ./starship.nix { inherit lib; };
+{ pkgs, config, lib, ... }:
+let
+  omz = pkgs.fetchFromGitHub
+    {
+      owner = "ohmyzsh";
+      repo = "ohmyzsh";
+      rev = "68f3ebb4de11aa2013ccc5252d4415840e0d7342";
+      hash = "sha256-5QsedauFgdhRDY6P2eMewGSLPWSaed2xZEcvTRYSrTs=";
+    };
+in
+{
+  programs.starship = import ./starship.nix {
+    inherit lib;
+  };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -21,48 +33,32 @@
         src = pkgs.zsh-nix-shell;
         file = "share/zsh-nix-shell/nix-shell.plugin.zsh";
       }
+      {
+        name = "omz-ssh-agent";
+        src = omz;
+        file = "plugins/ssh-agent/ssh-agent.plugin.zsh";
+      }
+      {
+        name = "omz-common-aliases";
+        src = omz;
+        file = "plugins/common-aliases/common-aliases.plugin.zsh";
+      }
+      {
+        name = "omz-git";
+        src = omz;
+        file = "plugins/git/git.plugin.zsh";
+      }
+      {
+        name = "omz-extract";
+        src = omz;
+        file = "plugins/extract/extract.plugin.zsh";
+      }
+      {
+        name = "zsh-forgit";
+        src = pkgs.zsh-forgit;
+        file = "share/zsh/zsh-forgit/forgit.plugin.zsh";
+      }
     ];
-    zplug = {
-      enable = true;
-      plugins = [
-        {
-          name = "plugins/common-aliases";
-          tags =
-            [ "from:oh-my-zsh" "at:904f8685f75ff5dd3f544f8c6f2cabb8e5952e9a" ];
-        }
-        {
-          name = "plugins/git";
-          tags =
-            [ "from:oh-my-zsh" "at:904f8685f75ff5dd3f544f8c6f2cabb8e5952e9a" ];
-        }
-        {
-          name = "plugins/extract";
-          tags =
-            [ "from:oh-my-zsh" "at:904f8685f75ff5dd3f544f8c6f2cabb8e5952e9a" ];
-        }
-        {
-          name = "plugins/ssh-agent";
-          tags =
-            [ "from:oh-my-zsh" "at:904f8685f75ff5dd3f544f8c6f2cabb8e5952e9a" ];
-        }
-        {
-          name = "rupa/z";
-          tags = [ "use:z.sh" "at:v1.11" ];
-        }
-        {
-          name = "changyuheng/fz";
-          tags = [ "defer:1" "at:2a4c1bc73664bb938bfcc7c99f473d0065f9dbfd" ];
-        }
-        {
-          name = "hlissner/zsh-autopair";
-          tags = [ "at:9d003fc02dbaa6db06e6b12e8c271398478e0b5d" "defer:2" ];
-        }
-        {
-          name = "wfxr/forgit";
-          tags = [ "at:7b26cd46ac768af51b8dd4b84b6567c4e1c19642" "defer:1" ];
-        }
-      ];
-    };
     initExtraBeforeCompInit = ''
       # fix delete key
       bindkey "^[[3~" delete-char
@@ -71,7 +67,6 @@
       unsetopt BEEP
 
       # ctrl-d drop stash entry
-      FORGIT_STASH_FZF_OPTS='--bind="ctrl-d:reload(git stash drop $(cut -d: -f1 <<<{}) 1>/dev/null && git stash list)"'
       setopt HIST_IGNORE_ALL_DUPS
       autoload -U edit-command-line
 
@@ -84,11 +79,12 @@
       select-word-style bash
     '';
 
-    localVariables = {
-      FZF_DEFAULT_COMMAND = "${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules --exclude '*.class'";
-      FZF_CTRL_T_OPTS = "--ansi --preview '${pkgs.bat}/bin/bat --style=numbers --color=always --line-range :500 {}'";
-      FZF_CTRL_T_COMMAND = "${pkgs.fd}/bin/fd -I --type file";
-    };
+    initExtraFirst = ''
+      export FORGIT_STASH_FZF_OPTS="--bind='ctrl-d:reload(${pkgs.git}/bin/git stash drop $(cut -d: -f1 <<<{}) 1>/dev/null && ${pkgs.git}/bin/git stash list)'"
+      export FZF_CTRL_T_COMMAND="${pkgs.fd}/bin/fd -I --type file"
+      export FZF_CTRL_T_OPTS="--ansi --preview '${pkgs.bat}/bin/bat --style=numbers --color=always --line-range :500 {}'"
+      export FZF_DEFAULT_COMMAND="${pkgs.fd}/bin/fd --type f --hidden --exclude .git --exclude node_modules --exclude '*.class'";
+    '';
     history = { extended = true; };
     shellAliases = {
       lsd = "${pkgs.exa}/bin/exa --long --header --git --all";
