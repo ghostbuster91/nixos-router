@@ -1,5 +1,11 @@
-{ lib, pkgs, ... }: {
-  imports = [ ./network.nix ];
+{ lib, pkgs, hostapd, ... }: {
+
+  disabledModules = [ "services/networking/hostapd.nix" ];
+
+  imports = [
+    ./network.nix
+    "${hostapd}/nixos/modules/services/networking/hostapd.nix"
+  ];
   system.stateVersion = lib.mkDefault "22.11";
 
   # powerManagement.cpuFreqGovernor = "ondemand"; TODO: missing some kernel module
@@ -37,6 +43,11 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # nixpkgs.overlays = [ (final: prev: 
+  #   services = prev.services.extend(final': prev': {
+  #     hostapd= hostapd.services.
+  #   });
+  # ) ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -84,6 +95,8 @@
     gnused
     gnutar
     gawk
+
+    iw
   ];
 
   # replace default editor with neovim

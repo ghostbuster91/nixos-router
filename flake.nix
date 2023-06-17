@@ -2,15 +2,17 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hostapd.url = "github:oddlama/nixpkgs";
   };
 
   outputs =
     { self
     , nixpkgs
     , home-manager
+    , hostapd
     , ...
     }@attrs:
     let
@@ -39,8 +41,10 @@
             inherit self;
             inherit (self.packages.aarch64-linux) armTrustedFirmwareMT7986;
             inherit username;
+            inherit hostapd;
           };
           modules = [
+            # hostapd.nixosModules.hostapd
             ./lib/sd-image-mt7986.nix
             ./nixos/hardware-configuration.nix
             ./nixos/configuration.nix

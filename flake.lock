@@ -20,6 +20,21 @@
         "type": "github"
       }
     },
+    "hostapd": {
+      "locked": {
+        "lastModified": 1686873893,
+        "narHash": "sha256-bH4e5UwuF2jH7TMY21PrISKxdVZmoh0H1agdv3+vmQE=",
+        "owner": "oddlama",
+        "repo": "nixpkgs",
+        "rev": "b2d394f1933bd6ca56737284baf115340ec9037c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oddlama",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1686592866,
@@ -39,6 +54,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "hostapd": "hostapd",
         "nixpkgs": "nixpkgs"
       }
     }
