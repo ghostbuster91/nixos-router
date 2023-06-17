@@ -73,6 +73,26 @@ in
           # or "routable" with IP addresses configured
           # RequiredForOnline = "carrier";
         };
+        address = [
+          "192.168.10.1/24"
+          "2001:db8:1122:3344::1/64"
+        ];
+        networkConfig = {
+          IPv6SendRA = true;
+        };
+        ipv6Prefixes = [ {
+          # Announce a static prefix
+          ipv6PrefixConfig.Prefix = "2001:db8:1122:3344::/64";
+        } ];
+        ipv6SendRAConfig = {
+          # Provide a DNS resolver
+          EmitDNS = true;
+          DNS = "2001:db8:1122:3344::1";
+          EmitDomains = true;
+          Domains = [
+            "lan.home"
+          ];
+        };
       };
       "10-wan" = {
         matchConfig.Name = "wan";
@@ -106,7 +126,7 @@ in
             };
             bssid = "e6:00:43:07:00:00";
             settings = {
-            bridge="br0";
+              bridge = "br0";
             };
           };
           wlan0-1 = {
@@ -117,8 +137,8 @@ in
               wpaPassword = "replication";
             };
             bssid = "e6:02:43:07:00:00";
-settings = {
-            bridge="br0";
+            settings = {
+              bridge = "br0";
             };
           };
         };
@@ -132,8 +152,8 @@ settings = {
             ssid = "koteczkowo4";
             authentication.saePasswords = [{ password = "replication"; }]; # Use saePasswordsFile if possible.
             bssid = "e6:d0:43:07:00:00";
-settings = {
-            bridge="br0";
+            settings = {
+              bridge = "br0";
             };
           };
         };
