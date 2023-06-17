@@ -105,6 +105,9 @@ in
               saePasswords = [{ password = "replication"; }];
             };
             bssid = "e6:00:43:07:00:00";
+            settings = {
+            bridge="br0";
+            };
           };
           wlan0-1 = {
             ssid = "koteczkowo3";
@@ -114,6 +117,9 @@ in
               wpaPassword = "replication";
             };
             bssid = "e6:02:43:07:00:00";
+settings = {
+            bridge="br0";
+            };
           };
         };
       };
@@ -126,6 +132,9 @@ in
             ssid = "koteczkowo4";
             authentication.saePasswords = [{ password = "replication"; }]; # Use saePasswordsFile if possible.
             bssid = "e6:d0:43:07:00:00";
+settings = {
+            bridge="br0";
+            };
           };
         };
       };
