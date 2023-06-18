@@ -75,24 +75,8 @@ in
         };
         address = [
           "192.168.10.1/24"
-          "2001:db8:1122:3344::1/64"
         ];
-        networkConfig = {
-          IPv6SendRA = true;
-        };
-        ipv6Prefixes = [ {
-          # Announce a static prefix
-          ipv6PrefixConfig.Prefix = "2001:db8:1122:3344::/64";
-        } ];
-        ipv6SendRAConfig = {
-          # Provide a DNS resolver
-          EmitDNS = true;
-          DNS = "2001:db8:1122:3344::1";
-          EmitDomains = true;
-          Domains = [
-            "lan.home"
-          ];
-        };
+        networkConfig = { };
       };
       "10-wan" = {
         matchConfig.Name = "wan";
@@ -161,6 +145,26 @@ in
     };
   };
 
+  services.resolved = {
+    enable = false;
+  };
+  services.dnsmasq = {
+    enable = true;
+    settings = {
+      server = [ "9.9.9.9" "8.8.8.8" "1.1.1.1" ];
+      domain-needed = true;
+      dhcp-range = [ "192.168.10.100,192.168.10.254" ];
+      interface = "br0";
+      dhcp-host = "192.168.10.1";
+    };
+    # extraConfig = ''
+    #   domain-needed
+    #   interface=br0
+    #   dhcp-range=192.168.10.100,192.168.10.254,24h
+    #   # router
+    #   dhcp-host=192.168.10.1
+    # '';
+  };
 
   # The service irqbalance is useful as it assigns certain IRQ calls to specific CPUs instead of letting the first CPU core to handle everything. This is supposed to increase performance by hitting CPU cache more often.
   services.irqbalance.enable = true;
