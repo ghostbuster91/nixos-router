@@ -1,6 +1,6 @@
-({ config, lib, self, ... }: {
+({ config, lib, bpir3, ... }: {
   # Needs to be updated, a number of patches made it into 6.3
-  boot.kernelPackages = self.packages.aarch64-linux.linuxPackages_bpir3;
+  boot.kernelPackages = bpir3.packages.aarch64-linux.linuxPackages_bpir3;
   # We exclude a number of modules included in the default list. A non-insignificant amount do
   # not apply to embedded hardware like this, so simply skip the defaults.
   #
@@ -25,23 +25,23 @@
   hardware.deviceTree.overlays = [
     {
       name = "bpir3-sd-enable";
-      dtsFile = ./bpir3-dts/mt7986a-bananapi-bpi-r3-sd.dts;
+      dtsFile = "${bpir3}/bpir3-dts/mt7986a-bananapi-bpi-r3-sd.dts";
     }
     {
       name = "bpir3-nand-enable";
-      dtsFile = ./bpir3-dts/mt7986a-bananapi-bpi-r3-nand.dts;
+      dtsFile = "${bpir3}/bpir3-dts/mt7986a-bananapi-bpi-r3-nand.dts";
     }
     {
       name = "bpi-r3 wifi training data";
-      dtsFile = ./bpir3-dts/mt7986a-bananapi-bpi-r3-wirless.dts;
+      dtsFile = "${bpir3}/bpir3-dts/mt7986a-bananapi-bpi-r3-wirless.dts";
     }
     {
       name = "reset button disable";
-      dtsFile = ./bpir3-dts/mt7986a-bananapi-bpi-r3-pcie-button.dts;
+      dtsFile = "${bpir3}/bpir3-dts/mt7986a-bananapi-bpi-r3-pcie-button.dts";
     }
     {
       name = "mt7986a efuses";
-      dtsFile = ./bpir3-dts/mt7986a-efuse-device-tree-node.dts;
+      dtsFile = "${bpir3}/bpir3-dts/mt7986a-efuse-device-tree-node.dts";
     }
   ];
 

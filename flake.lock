@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "bpir3": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1686976778,
+        "narHash": "sha256-YNlqYJuUqs9FcbP3/yf/jN1rQd3Ijn1N4+wad9U1JXM=",
+        "owner": "nakato",
+        "repo": "nixos-bpir3-example",
+        "rev": "96535bf583bf2fcbf6d7d95e4b5eab730b850d4e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nakato",
+        "repo": "nixos-bpir3-example",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -89,6 +109,7 @@
     },
     "root": {
       "inputs": {
+        "bpir3": "bpir3",
         "disko": "disko",
         "home-manager": "home-manager",
         "hostapd": "hostapd",

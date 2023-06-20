@@ -14,6 +14,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    bpir3 = {
+      url = "github:nakato/nixos-bpir3-example";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -23,6 +27,7 @@
     , hostapd
     , disko
     , sops-nix
+    , bpir3
     , ...
     }@attrs:
     let
@@ -45,17 +50,17 @@
       nixosModules = import ./modules;
 
       nixosConfigurations = {
-        bpir3 = nixpkgs.lib.nixosSystem {
+        surfer = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = {
             inherit self;
             inherit (self.packages.aarch64-linux) armTrustedFirmwareMT7986;
             inherit username;
             inherit hostapd;
+            inherit bpir3;
           };
           modules = [
-            # hostapd.nixosModules.hostapd
-            ./lib/sd-image-mt7986.nix
+            "${bpir3}/lib/sd-image-mt7986.nix"
             ./nixos/hardware-configuration.nix
             ./nixos/configuration.nix
             home-manager.nixosModules.home-manager
