@@ -12,7 +12,8 @@ in
     };
   };
   networking = {
-  nameservers = [ "${publicDnsServer}" ];
+    hostName = "surfer";
+    nameservers = [ "${publicDnsServer}" ];
     useNetworkd = true;
     useDHCP = false;
     # hostName = "bpir3";
@@ -181,8 +182,8 @@ in
   services.resolved = {
     enable = true;
     extraConfig = ''
-    DNSStubListener=no
-  '';
+      DNSStubListener=no
+    '';
   };
   services.dnsmasq = {
     enable = true;
