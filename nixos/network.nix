@@ -12,12 +12,45 @@ in
     };
   };
   networking = {
+  nameservers = [ "${publicDnsServer}" ];
     useNetworkd = true;
     useDHCP = false;
     # hostName = "bpir3";
 
     # No local firewall.
+    nat.enable = false;
     firewall.enable = false;
+    nftables = {
+      enable = true;
+      ruleset = ''
+        table ip filter {
+          chain input {
+            type filter hook input priority 0; policy drop;
+
+            iifname { "br0" } accept comment "Allow local network to access the router"
+            iifname "wan" ct state { established, related } accept comment "Allow established traffic"
+            iifname "wan" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
+            iifname "wan" counter drop comment "Drop all other unsolicited traffic from wan"
+            # iifname "wan" udp dport 53 accept comment "Allow DNS UDP"
+            # iifname "wan" tcp dport 53 accept comment "Allow DNS TCP"
+          }
+          chain forward {
+            type filter hook forward priority filter; policy drop;
+            iifname { "br0" } oifname { "wan" } accept comment "Allow trusted LAN to WAN"
+            iifname { "wan" } oifname { "br0" } ct state established, related accept comment "Allow established back to LANs"
+          }
+        }
+
+        table ip nat {
+          chain postrouting {
+            type nat hook postrouting priority 100; policy accept;
+            oifname "wan" masquerade
+          } 
+        }
+      '';
+    };
+
+
   };
 
   systemd.network = {
@@ -146,7 +179,10 @@ in
   };
 
   services.resolved = {
-    enable = false;
+    enable = true;
+    extraConfig = ''
+    DNSStubListener=no
+  '';
   };
   services.dnsmasq = {
     enable = true;
