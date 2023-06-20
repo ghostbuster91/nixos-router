@@ -20,6 +20,7 @@
 
   home.packages = with pkgs; [
     nix-tree
+    ripgrep
   ];
 
   programs = {

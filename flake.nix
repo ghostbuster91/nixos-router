@@ -44,7 +44,7 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
-        (import ./pkgs { inherit pkgs; }) // pkgs
+        bpir3.packages.${system} // pkgs
       );
 
       nixosModules = import ./modules;
