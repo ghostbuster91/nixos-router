@@ -10,6 +10,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -17,6 +21,8 @@
     , nixpkgs
     , home-manager
     , hostapd
+    , disko
+    , sops-nix
     , ...
     }@attrs:
     let
@@ -53,6 +59,8 @@
             ./nixos/hardware-configuration.nix
             ./nixos/configuration.nix
             home-manager.nixosModules.home-manager
+            disko.nixosModules.disko
+            sops-nix.nixosModules.sops
             {
               home-manager = {
                 useUserPackages = true;

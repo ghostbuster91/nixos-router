@@ -106,7 +106,7 @@ in
             ssid = "koteczkowo4";
             authentication = {
               mode = "wpa3-sae";
-              saePasswords = [{ password = "replication"; }];
+              saePasswordsFile = config.sops.secrets.wifiPassword.path;
             };
             bssid = "e6:00:43:07:00:00";
             settings = {
@@ -117,8 +117,8 @@ in
             ssid = "koteczkowo3";
             authentication = {
               mode = "wpa3-sae-transition";
-              saePasswords = [{ password = "replication"; }];
-              wpaPassword = "replication";
+              saePasswordsFile = config.sops.secrets.wifiPassword.path;
+              wpaPasswordFile = config.sops.secrets.wifiPassword.path;
             };
             bssid = "e6:02:43:07:00:00";
             settings = {
@@ -134,7 +134,7 @@ in
         networks = {
           wlan1 = {
             ssid = "koteczkowo4";
-            authentication.saePasswords = [{ password = "replication"; }]; # Use saePasswordsFile if possible.
+            authentication.saePasswordsFile = config.sops.secrets.wifiPassword.path; # Use saePasswordsFile if possible.
             bssid = "e6:d0:43:07:00:00";
             settings = {
               bridge = "br0";

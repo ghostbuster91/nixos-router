@@ -1,0 +1,7 @@
+keys:
+  - &kghost age1ttpdaeuf5uw4fz5jl3vujl04kj2nlwxat27slwxzc9xxkf0wqu7scnf6yd
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+    - age:
+      - *kghost

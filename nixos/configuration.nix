@@ -3,11 +3,12 @@
   disabledModules = [ "services/networking/hostapd.nix" ];
 
   imports = [
+    ./sops.nix
     ./network.nix
     "${hostapd}/nixos/modules/services/networking/hostapd.nix"
-      (import ./disko-config.nix {
-        disks = [ "/dev/nvme0n1" ];
-      })
+    (import ./disko-config.nix {
+      disks = [ "/dev/nvme0n1" ];
+    })
   ];
   system.stateVersion = lib.mkDefault "22.11";
 
@@ -100,6 +101,7 @@
     gawk
 
     iw
+    sops
   ];
 
   # replace default editor with neovim
