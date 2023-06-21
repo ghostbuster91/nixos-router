@@ -16,7 +16,6 @@ in
     nameservers = [ "${publicDnsServer}" ];
     useNetworkd = true;
     useDHCP = false;
-    # hostName = "bpir3";
 
     # No local firewall.
     nat.enable = false;
@@ -32,8 +31,6 @@ in
             iifname "wan" ct state { established, related } accept comment "Allow established traffic"
             iifname "wan" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
             iifname "wan" counter drop comment "Drop all other unsolicited traffic from wan"
-            # iifname "wan" udp dport 53 accept comment "Allow DNS UDP"
-            # iifname "wan" tcp dport 53 accept comment "Allow DNS TCP"
           }
           chain forward {
             type filter hook forward priority filter; policy drop;
@@ -41,7 +38,7 @@ in
             iifname { "wan" } oifname { "br0" } ct state established, related accept comment "Allow established back to LANs"
           }
         }
-
+        
         table ip nat {
           chain postrouting {
             type nat hook postrouting priority 100; policy accept;
@@ -180,7 +177,7 @@ in
   };
 
   services.resolved = {
-    enable = true;
+    enable = true; # Otherwisie /etc/resolve.conf is not populated
     extraConfig = ''
       DNSStubListener=no
     '';
@@ -194,26 +191,8 @@ in
       interface = "br0";
       dhcp-host = "192.168.10.1";
     };
-    # extraConfig = ''
-    #   domain-needed
-    #   interface=br0
-    #   dhcp-range=192.168.10.100,192.168.10.254,24h
-    #   # router
-    #   dhcp-host=192.168.10.1
-    # '';
   };
 
   # The service irqbalance is useful as it assigns certain IRQ calls to specific CPUs instead of letting the first CPU core to handle everything. This is supposed to increase performance by hitting CPU cache more often.
   services.irqbalance.enable = true;
-
-  # services.create_ap = {
-  #   enable = true;
-  #   settings = {
-  #     INTERNET_IFACE = "wan";
-  #     WIFI_IFACE = "wlan0";
-  #     SSID = "My Wifi Hotspot";
-  #     PASSPHRASE = "12345678";
-  #   };
-  # };
-
 }
