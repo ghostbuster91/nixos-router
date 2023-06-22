@@ -1,6 +1,6 @@
-# NixOS on BPi-R3 Example
+# My nixos router configuration
 
-This is an example of booting NixOS on a BPi-R3.
+*Based on https://github.com/nakato/nixos-bpir3-example*
 
 Build an SD-Image with:
 
