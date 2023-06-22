@@ -1,12 +1,10 @@
 { pkgs, ... }: {
   services.prometheus = {
-    exporters = {
-      systemd = {
-        enable = true;
-        port = 9002;
-      };
+      exporters = {
       node = {
         enable = true;
+        # TODO test perf impact of these modules
+        # enabledCollectors = [ "systemd"  "wifi" "ethtool" ];
         port = 9002;
       };
     };
