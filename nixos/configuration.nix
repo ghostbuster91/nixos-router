@@ -9,6 +9,7 @@
     (import ./disko-config.nix {
       disks = [ "/dev/nvme0n1" ];
     })
+    ./monitoring.nix
   ];
   system.stateVersion = lib.mkDefault "22.11";
 
