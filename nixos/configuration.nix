@@ -80,6 +80,7 @@
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     tcpdump # A powerful command-line packet analyzer
+    ethtool # manage NIC settings (offload, NIC feeatures, ...)
 
     # system tools
     sysstat
