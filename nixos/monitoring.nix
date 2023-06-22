@@ -1,9 +1,12 @@
 { pkgs, ... }: {
   services.prometheus = {
     exporters = {
+      systemd = {
+        enable = true;
+        port = 9002;
+      };
       node = {
         enable = true;
-        systemd.enable = true;
         port = 9002;
       };
     };
