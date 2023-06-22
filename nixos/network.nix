@@ -31,6 +31,7 @@ in
             iifname "wan" ct state { established, related } accept comment "Allow established traffic"
             iifname "wan" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
             iifname "wan" counter drop comment "Drop all other unsolicited traffic from wan"
+            iifname "lo" accept comment "Accept everything from loopback interface"
           }
           chain forward {
             type filter hook forward priority filter; policy drop;
@@ -116,6 +117,10 @@ in
           DHCP = "ipv4";
           # accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
           IPv6AcceptRA = true;
+          DNSOverTLS = true;
+          DNSSEC = true;
+          IPv6PrivacyExtensions = false;
+          IPForward = true;
         };
         # make routing on this interface a dependency for network-online.target
         linkConfig.RequiredForOnline = "routable";
@@ -176,12 +181,6 @@ in
     };
   };
 
-  services.resolved = {
-    enable = true; # Otherwisie /etc/resolve.conf is not populated
-    extraConfig = ''
-      DNSStubListener=no
-    '';
-  };
   services.dnsmasq = {
     enable = true;
     settings = {
