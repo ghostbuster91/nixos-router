@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   services.prometheus = {
-      exporters = {
+    exporters = {
       node = {
         enable = true;
         # TODO test perf impact of these modules

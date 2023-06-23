@@ -181,14 +181,30 @@ in
     };
   };
 
+  services.resolved.enable = false;
+
   services.dnsmasq = {
     enable = true;
     settings = {
+      # upstream DNS servers
       server = [ "9.9.9.9" "8.8.8.8" "1.1.1.1" ];
+      # sensible behaviours
       domain-needed = true;
+      bogus-priv = true;
+      no-resolv = true;
+
       dhcp-range = [ "192.168.10.100,192.168.10.254" ];
+      bind-interfaces = true;
       interface = "br0";
       dhcp-host = "192.168.10.1";
+
+      # local domains
+      local = "/lan/";
+      domain = "lan";
+      expand-hosts = true;
+
+      no-hosts = true;
+      address = "/surfer.lan/192.168.10.1";
     };
   };
 
