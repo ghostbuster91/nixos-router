@@ -65,6 +65,14 @@ in
     };
     networks = {
       # Connect the bridge ports to the bridge
+      "30-lan0" = {
+        matchConfig.Name = "lan0";
+        networkConfig = {
+          Bridge = "br0";
+          ConfigureWithoutCarrier = true;
+        };
+        linkConfig.RequiredForOnline = "enslaved";
+      };
       "30-lan1" = {
         matchConfig.Name = "lan1";
         networkConfig = {
@@ -83,14 +91,6 @@ in
       };
       "30-lan3" = {
         matchConfig.Name = "lan3";
-        networkConfig = {
-          Bridge = "br0";
-          ConfigureWithoutCarrier = true;
-        };
-        linkConfig.RequiredForOnline = "enslaved";
-      };
-      "30-lan4" = {
-        matchConfig.Name = "lan4";
         networkConfig = {
           Bridge = "br0";
           ConfigureWithoutCarrier = true;
