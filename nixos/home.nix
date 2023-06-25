@@ -21,6 +21,7 @@
   home.packages = with pkgs; [
     nix-tree
     ripgrep
+    fd # faster find
   ];
 
   programs = {
