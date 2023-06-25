@@ -34,6 +34,12 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
       username = "kghost";
+      hostapdPackages = forAllSystems (system:
+        let
+          pkgs = hostapd.legacyPackages.${system};
+        in
+        pkgs
+      );
     in
     {
       formatter = forAllSystems (system:
@@ -57,6 +63,7 @@
             inherit (self.packages.aarch64-linux) armTrustedFirmwareMT7986;
             inherit username;
             inherit hostapd;
+            inherit hostapdPackages;
             inherit bpir3;
           };
           modules = [

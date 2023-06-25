@@ -1,4 +1,4 @@
-{ lib, pkgs, hostapd, ... }: {
+{ lib, pkgs, hostapd, hostapdPackages, ... }: {
 
   disabledModules = [ "services/networking/hostapd.nix" ];
 
@@ -47,7 +47,13 @@
   };
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+      hostapd = hostapdPackages.aarch64-linux.hostapd;
+    };
+  };
+
   # nixpkgs.overlays = [ (final: prev: 
   #   services = prev.services.extend(final': prev': {
   #     hostapd= hostapd.services.
