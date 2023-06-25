@@ -151,7 +151,7 @@ in
               mode = "wpa3-sae";
               saePasswordsFile = config.sops.secrets.wifiPassword.path;
             };
-            bssid = "36:d9:02:21:08:a2";
+            bssid = "36:b9:02:21:08:00";
             settings = {
               bridge = "br0";
             };
