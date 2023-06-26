@@ -157,18 +157,21 @@ in
             };
           };
           # Uncomment when needed otherwise remove
-          # wlan0-1 = {
-          #   ssid = "koteczkowo3";
-          #   authentication = {
-          #     mode = "wpa3-sae-transition";
-          #     saePasswordsFile = config.sops.secrets.wifiPassword.path;
-          #     wpaPasswordFile = config.sops.secrets.wifiPassword.path;
-          #   };
-          #   bssid = "e6:02:43:07:00:00";
-          #   settings = {
-          #     bridge = "br0";
-          #   };
-          # };
+          wlan0-1 = {
+            ssid = "koteczkowo3";
+            authentication = {
+              mode = "none"; # this is overriden by settings
+            };
+            managementFrameProtection="optional";
+            bssid = "e6:02:43:07:00:00";
+            settings = {
+              bridge = "br0";
+              wpa = lib.mkForce 2;
+              wpa_key_mgmt = "WPA-PSK";
+              wpa_pairwise = "CCMP";
+              wpa_passphrase = config.sops.secrets.legacyWifiPassword.path;
+            };
+          };
         };
       };
       wlan1 = {
@@ -248,7 +251,11 @@ in
         networks = {
           wlan1 = {
             ssid = "koteczkowo5";
-            authentication.saePasswordsFile = config.sops.secrets.wifiPassword.path; # Use saePasswordsFile if possible.
+            authentication = {
+
+              mode = "wpa3-sae";
+              saePasswordsFile = config.sops.secrets.wifiPassword.path; # Use saePasswordsFile if possible.
+            };
             bssid = "36:b9:02:21:08:a2";
             settings = {
               bridge = "br0";
