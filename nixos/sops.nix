@@ -5,7 +5,10 @@
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.sshKeyPaths = [ "/home/${username}/.ssh/id_ed25519" ];
   sops.age.generateKey = false;
-  # This is the actual specification of the secrets.
-  sops.secrets.wifiPassword = { };
-  sops.secrets.legacyWifiPassword = { };
+  # The mainWifiPasswords secret contains entries in the following format:
+  # $password|vlan_id=$id
+  sops.secrets.mainWifiPasswords = { };
+  # The iotWifiPassword secret contains entries in the following format:
+  # vlan_id=$id $mac_address $password
+  sops.secrets.iotWifiPasswords = { };
 }

@@ -64,6 +64,36 @@ in
           Name = "br0";
         };
       };
+      "20-vlan100" = {
+        netdevConfig = {
+          Kind = "vlan";
+          Name = "vlan100";
+          Description = "IoT";
+        };
+        vlanConfig = {
+          Id = 100;
+        };
+      };
+      "20-vlan110" = {
+        netdevConfig = {
+          Kind = "vlan";
+          Name = "vlan110";
+          Description = "Guest Access";
+        };
+        vlanConfig = {
+          Id = 110;
+        };
+      };
+      "20-vlan120" = {
+        netdevConfig = {
+          Kind = "vlan";
+          Name = "vlan120";
+          Description = "Main network";
+        };
+        vlanConfig = {
+          Id = 120;
+        };
+      };
     };
     networks = {
       # Connect the bridge ports to the bridge
@@ -74,6 +104,9 @@ in
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
+        vlan = [
+          "vlan120"
+        ];
       };
       "30-lan1" = {
         matchConfig.Name = "lan1";
@@ -82,6 +115,9 @@ in
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
+        vlan = [
+          "vlan120"
+        ];
       };
       "30-lan2" = {
         matchConfig.Name = "lan2";
@@ -90,6 +126,9 @@ in
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
+        vlan = [
+          "vlan120"
+        ];
       };
       "30-lan3" = {
         matchConfig.Name = "lan3";
@@ -98,6 +137,9 @@ in
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
+        vlan = [
+          "vlan120"
+        ];
       };
       # # Configure the bridge for its desired function
       "40-br0" = {
@@ -149,14 +191,13 @@ in
             ssid = "koteczkowo5";
             authentication = {
               mode = "wpa3-sae";
-              saePasswordsFile = config.sops.secrets.wifiPassword.path;
+              saePasswordsFile = config.sops.secrets.mainWifiPasswords.path;
             };
             bssid = "36:b9:02:21:08:00";
             settings = {
               bridge = "br0";
             };
           };
-          # Uncomment when needed otherwise remove
           wlan0-1 = {
             ssid = "koteczkowo3";
             authentication = {
@@ -169,7 +210,7 @@ in
               wpa = lib.mkForce 2;
               wpa_key_mgmt = "WPA-PSK";
               wpa_pairwise = "CCMP";
-              wpa_passphrase = config.sops.secrets.legacyWifiPassword.path;
+              wpa_psk_file = config.sops.secrets.iotWifiPasswords.path;
             };
           };
         };
@@ -254,7 +295,7 @@ in
             authentication = {
 
               mode = "wpa3-sae";
-              saePasswordsFile = config.sops.secrets.wifiPassword.path; # Use saePasswordsFile if possible.
+              saePasswordsFile = config.sops.secrets.mainWifiPasswords.path; # Use saePasswordsFile if possible.
             };
             bssid = "36:b9:02:21:08:a2";
             settings = {
