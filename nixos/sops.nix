@@ -7,5 +7,5 @@
   sops.age.generateKey = false;
   # This is the actual specification of the secrets.
   sops.secrets.wifiPassword = { };
-  sops.secrets.legacyWifiPassword = {};
+  sops.secrets.legacyWifiPassword = { };
 }

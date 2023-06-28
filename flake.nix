@@ -18,6 +18,10 @@
       url = "github:nakato/nixos-bpir3-example";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-nftables-firewall = {
+      url = "github:thelegy/nixos-nftables-firewall";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -28,6 +32,7 @@
     , disko
     , sops-nix
     , bpir3
+    , nixos-nftables-firewall
     , ...
     }@attrs:
     let
@@ -73,6 +78,7 @@
             home-manager.nixosModules.home-manager
             disko.nixosModules.disko
             sops-nix.nixosModules.sops
+            nixos-nftables-firewall.nixosModules.default
             {
               home-manager = {
                 useUserPackages = true;

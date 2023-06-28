@@ -19,3 +19,8 @@ obtain public key:
 ```sh
 $ nix-shell -p ssh-to-age --run 'cat ~/.ssh/id_ed25519.pub | ssh-to-age'
 ```
+
+view generated nftables:
+```sh
+$ nft list ruleset 
+```

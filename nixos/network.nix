@@ -20,36 +20,38 @@ in
     # No local firewall.
     nat.enable = false;
     firewall.enable = false;
+
+    # Use the nftables firewall instead of the base nixos scripted rules.
+    # This flake provides a similar utility to the base nixos scripting.
+    # https://github.com/thelegy/nixos-nftables-firewall/tree/main
     nftables = {
       enable = true;
-      ruleset = ''
-        table ip filter {
-          chain input {
-            type filter hook input priority 0; policy drop;
-
-            iifname { "br0" } accept comment "Allow local network to access the router"
-            iifname "wan" ct state { established, related } accept comment "Allow established traffic"
-            iifname "wan" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
-            iifname "wan" counter drop comment "Drop all other unsolicited traffic from wan"
-            iifname "lo" accept comment "Accept everything from loopback interface"
-          }
-          chain forward {
-            type filter hook forward priority filter; policy drop;
-            iifname { "br0" } oifname { "wan" } accept comment "Allow trusted LAN to WAN"
-            iifname { "wan" } oifname { "br0" } ct state established, related accept comment "Allow established back to LANs"
-          }
-        }
-        
-        table ip nat {
-          chain postrouting {
-            type nat hook postrouting priority 100; policy accept;
-            oifname "wan" masquerade
-          } 
-        }
-      '';
+      stopRuleset = "";
+      firewall = {
+        enable = true;
+        zones = {
+          lan.interfaces = [ "br0" ];
+          wan.interfaces = [ "wan" ];
+        };
+        rules = {
+          lan = {
+            from = [ "lan" ];
+            to = [ "fw" ];
+            verdict = "accept";
+          };
+          outbound = {
+            from = [ "lan" ];
+            to = [ "lan" "wan" ];
+            verdict = "accept";
+          };
+          nat = {
+            from = [ "lan" ];
+            to = [ "wan" ];
+            masquerade = true;
+          };
+        };
+      };
     };
-
-
   };
 
   systemd.network = {
@@ -126,10 +128,8 @@ in
         linkConfig.RequiredForOnline = "routable";
       };
     };
-
   };
 
-  #
   # wireless access point
   services.hostapd = {
     enable = true;
@@ -162,7 +162,7 @@ in
             authentication = {
               mode = "none"; # this is overriden by settings
             };
-            managementFrameProtection="optional";
+            managementFrameProtection = "optional";
             bssid = "e6:02:43:07:00:00";
             settings = {
               bridge = "br0";
