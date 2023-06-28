@@ -30,22 +30,29 @@ in
       firewall = {
         enable = true;
         zones = {
-          lan.interfaces = [ "br0" ];
+          lan.interfaces = [ "vlan120" ];
+          iot.interfaces = [ "vlan100" ];
+          guest.interfaces = [ "vlan110" ];
           wan.interfaces = [ "wan" ];
         };
         rules = {
-          lan = {
+          lan_to_router = {
             from = [ "lan" ];
             to = [ "fw" ];
             verdict = "accept";
           };
-          outbound = {
+          lan_outbound = {
             from = [ "lan" ];
-            to = [ "lan" "wan" ];
+            to = [ "lan" "iot" "guest" "wan" ];
+            verdict = "accept";
+          };
+          guest_outbound = {
+            from = [ "guest" ];
+            to = [ "guest" "wlan" ];
             verdict = "accept";
           };
           nat = {
-            from = [ "lan" ];
+            from = [ "lan" "guest" ];
             to = [ "wan" ];
             masquerade = true;
           };
