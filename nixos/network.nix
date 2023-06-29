@@ -156,10 +156,46 @@ in
           # or "routable" with IP addresses configured
           # RequiredForOnline = "carrier";
         };
-        address = [
-          "192.168.10.1/24"
-        ];
         networkConfig = { };
+
+        "50-vlan100" = {
+          matchConfig.Name = "vlan100";
+          address = [
+            "10.20.100.1/24"
+          ];
+          networkConfig = {
+            ConfigureWithoutCarrier = true;
+          };
+          linkConfig = {
+            RequiredForOnline = "routable";
+          };
+        };
+
+        "50-vlan110" = {
+          matchConfig.Name = "vlan110";
+          address = [
+            "10.20.110.1/24"
+          ];
+          networkConfig = {
+            ConfigureWithoutCarrier = true;
+          };
+          linkConfig = {
+            RequiredForOnline = "routable";
+          };
+        };
+
+        "50-vlan120" = {
+          matchConfig.Name = "vlan120";
+          address = [
+            "10.20.120.1/24"
+          ];
+          networkConfig = {
+            ConfigureWithoutCarrier = true;
+          };
+          linkConfig = {
+            RequiredForOnline = "routable";
+          };
+        };
       };
       "10-wan" = {
         matchConfig.Name = "wan";
@@ -326,10 +362,13 @@ in
       bogus-priv = true;
       no-resolv = true;
 
-      dhcp-range = [ "192.168.10.100,192.168.10.254" ];
+      dhcp-range = [
+        "interface:vlan100:10.20.100.10,255.255.255.0"
+        "interface:vlan110:10.20.110.10,255.255.255.0"
+        "interface:vlan120:10.20.120.10,255.255.255.0"
+      ];
       bind-interfaces = true;
-      interface = "br0";
-      dhcp-host = "192.168.10.1";
+      interface = [ "vlan100" "vlan110" "vlan120" ];
 
       # local domains
       local = "/lan/";
@@ -338,7 +377,6 @@ in
 
       # don't use /etc/hosts as this would advertise surfer as localhost
       no-hosts = true;
-      address = "/surfer.lan/192.168.10.1";
     };
   };
 
