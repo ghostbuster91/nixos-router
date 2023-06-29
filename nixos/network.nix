@@ -157,44 +157,44 @@ in
           # RequiredForOnline = "carrier";
         };
         networkConfig = { };
+      };
 
-        "50-vlan100" = {
-          matchConfig.Name = "vlan100";
-          address = [
-            "10.20.100.1/24"
-          ];
-          networkConfig = {
-            ConfigureWithoutCarrier = true;
-          };
-          linkConfig = {
-            RequiredForOnline = "routable";
-          };
+      "50-vlan100" = {
+        matchConfig.Name = "vlan100";
+        address = [
+          "10.20.100.1/24"
+        ];
+        networkConfig = {
+          ConfigureWithoutCarrier = true;
         };
-
-        "50-vlan110" = {
-          matchConfig.Name = "vlan110";
-          address = [
-            "10.20.110.1/24"
-          ];
-          networkConfig = {
-            ConfigureWithoutCarrier = true;
-          };
-          linkConfig = {
-            RequiredForOnline = "routable";
-          };
+        linkConfig = {
+          RequiredForOnline = "routable";
         };
+      };
 
-        "50-vlan120" = {
-          matchConfig.Name = "vlan120";
-          address = [
-            "10.20.120.1/24"
-          ];
-          networkConfig = {
-            ConfigureWithoutCarrier = true;
-          };
-          linkConfig = {
-            RequiredForOnline = "routable";
-          };
+      "50-vlan110" = {
+        matchConfig.Name = "vlan110";
+        address = [
+          "10.20.110.1/24"
+        ];
+        networkConfig = {
+          ConfigureWithoutCarrier = true;
+        };
+        linkConfig = {
+          RequiredForOnline = "routable";
+        };
+      };
+
+      "50-vlan120" = {
+        matchConfig.Name = "vlan120";
+        address = [
+          "10.20.120.1/24"
+        ];
+        networkConfig = {
+          ConfigureWithoutCarrier = true;
+        };
+        linkConfig = {
+          RequiredForOnline = "routable";
         };
       };
       "10-wan" = {
