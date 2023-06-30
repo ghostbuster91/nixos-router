@@ -63,6 +63,20 @@ in
           Kind = "bridge";
           Name = "br0";
         };
+        extraConfig = ''
+          [Bridge]
+          VLANFiltering=1
+        '';
+      };
+      "25-vlan120" = {
+        netdevConfig = {
+          Kind = "vlan";
+          Name = "vlan120";
+          Description = "Main network";
+        };
+        vlanConfig = {
+          Id = 120;
+        };
       };
     };
     networks = {
@@ -72,36 +86,50 @@ in
         networkConfig = {
           Bridge = "br0";
           ConfigureWithoutCarrier = true;
+          LinkLocalAddressing = "no";
         };
         linkConfig.RequiredForOnline = "enslaved";
+        vlan = [
+          "vlan120"
+        ];
       };
       "30-lan1" = {
         matchConfig.Name = "lan1";
         networkConfig = {
           Bridge = "br0";
           ConfigureWithoutCarrier = true;
+          LinkLocalAddressing = "no";
         };
         linkConfig.RequiredForOnline = "enslaved";
+        vlan = [
+          "vlan120"
+        ];
       };
       "30-lan2" = {
         matchConfig.Name = "lan2";
         networkConfig = {
           Bridge = "br0";
           ConfigureWithoutCarrier = true;
+          LinkLocalAddressing = "no";
         };
         linkConfig.RequiredForOnline = "enslaved";
+        vlan = [
+          "vlan120"
+        ];
       };
       "30-lan3" = {
         matchConfig.Name = "lan3";
         networkConfig = {
-          Bridge = "br0";
           ConfigureWithoutCarrier = true;
         };
-        linkConfig.RequiredForOnline = "enslaved";
+        linkConfig.RequiredForOnline = "configured";
+        address = [
+          "192.168.10.100/24"
+        ];
       };
       # # Configure the bridge for its desired function
       "40-br0" = {
-        matchConfig.Name = "br0";
+        matchConfig.Name = "br";
         bridgeConfig = { };
         linkConfig = {
           # or "routable" with IP addresses configured
@@ -111,6 +139,7 @@ in
           "192.168.10.1/24"
         ];
         networkConfig = { };
+
       };
       "10-wan" = {
         matchConfig.Name = "wan";
@@ -279,7 +308,7 @@ in
       no-resolv = true;
 
       dhcp-range = [ "192.168.10.100,192.168.10.254" ];
-      interface = "br0";
+      interface = [ "br0" "lan3" ];
       dhcp-host = "192.168.10.1";
 
       # local domains
