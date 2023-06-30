@@ -30,7 +30,7 @@ in
       firewall = {
         enable = true;
         zones = {
-          lan.interfaces = [ "br0" ];
+          lan.interfaces = [ "br0" "vlan120" ];
           wan.interfaces = [ "wan" ];
         };
         rules = {
