@@ -279,7 +279,6 @@ in
       no-resolv = true;
 
       dhcp-range = [ "192.168.10.100,192.168.10.254" ];
-      bind-interfaces = true;
       interface = "br0";
       dhcp-host = "192.168.10.1";
 
