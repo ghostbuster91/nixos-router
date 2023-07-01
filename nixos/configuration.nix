@@ -1,4 +1,4 @@
-{ lib, pkgs, hostapd, hostapdPackages, ... }: {
+{ config, lib, pkgs, hostapd, hostapdPackages, username, ... }: {
 
   disabledModules = [ "services/networking/hostapd.nix" ];
 
@@ -27,6 +27,24 @@
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFFeU4GXH+Ae00DipGGJN7uSqPJxWFmgRo9B+xjV3mK4" ];
   };
 
+  system.autoUpgrade =
+    let
+      homeDir = config.users.users.${username}.home;
+    in
+    {
+      enable = true;
+      dates = "04:00";
+      flake = "${homeDir}/nixos-router";
+      flags = [
+        "--update-input"
+        "nixpkgs"
+      ];
+      allowReboot = true;
+      rebootWindow = {
+        lower = "02:00";
+        upper = "04:00";
+      };
+    };
 
   programs = {
     zsh.enable = true;
