@@ -20,7 +20,37 @@ obtain public key:
 $ nix-shell -p ssh-to-age --run 'cat ~/.ssh/id_ed25519.pub | ssh-to-age'
 ```
 
-view generated nftables:
+show generated nftables:
 ```sh
 $ nft list ruleset 
+```
+
+show dhcp leases
+```sh
+$ cat /var/lib/dnsmasq/dnsmasq.leases 
+```
+
+show hostapd configs:
+```sh
+$ sudo cat /run/hostapd/wlan0.hostapd.conf
+```
+
+show vlans:
+```sh
+$ bridge vlan show
+```
+
+show ip links (including master-slave relation)
+```sh
+$ ip link show
+```
+
+general state of the network interfaces
+```sh
+$ networkctl
+```
+
+details about radio devices
+```sh
+$ iw list
 ```
