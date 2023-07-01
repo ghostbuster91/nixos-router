@@ -161,7 +161,7 @@
               wpa = lib.mkForce 2;
               wpa_key_mgmt = "WPA-PSK";
               wpa_pairwise = "CCMP";
-              wpa_passphrase = config.sops.secrets.legacyWifiPassword.path;
+              wpa_psk_file = config.sops.secrets.legacyWifiPassword.path;
             };
           };
         };
