@@ -1,7 +1,4 @@
 { config, lib, pkgs, ... }:
-let
-  publicDnsServer = "8.8.8.8";
-in
 {
   boot = {
     kernel = {
@@ -13,7 +10,6 @@ in
   };
   networking = {
     hostName = "surfer";
-    nameservers = [ "${publicDnsServer}" ];
     useNetworkd = true;
     useDHCP = false;
 
