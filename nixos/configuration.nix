@@ -44,6 +44,11 @@
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
     package = pkgs.nixVersions.stable;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
   };
 
   # Allow unfree packages
@@ -89,6 +94,7 @@
     tcpdump # A powerful command-line packet analyzer
     ethtool # manage NIC settings (offload, NIC feeatures, ...)
     dnsutils # dig
+    wavemon # Ncurses-based monitoring application for wireless network devices
 
     # system tools
     sysstat
