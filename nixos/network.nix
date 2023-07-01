@@ -26,7 +26,7 @@
       firewall = {
         enable = true;
         zones = {
-          lan.interfaces = [ "br0" ];
+          lan.interfaces = [ "br-lan" ];
           wan.interfaces = [ "wan" ];
         };
         rules = {
@@ -54,10 +54,10 @@
     wait-online.anyInterface = true;
     netdevs = {
       # Create the bridge interface
-      "20-br0" = {
+      "20-br-lan" = {
         netdevConfig = {
           Kind = "bridge";
-          Name = "br0";
+          Name = "br-lan";
         };
       };
     };
@@ -66,7 +66,7 @@
       "30-lan0" = {
         matchConfig.Name = "lan0";
         networkConfig = {
-          Bridge = "br0";
+          Bridge = "br-lan";
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
@@ -74,7 +74,7 @@
       "30-lan1" = {
         matchConfig.Name = "lan1";
         networkConfig = {
-          Bridge = "br0";
+          Bridge = "br-lan";
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
@@ -82,7 +82,7 @@
       "30-lan2" = {
         matchConfig.Name = "lan2";
         networkConfig = {
-          Bridge = "br0";
+          Bridge = "br-lan";
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
@@ -90,14 +90,14 @@
       "30-lan3" = {
         matchConfig.Name = "lan3";
         networkConfig = {
-          Bridge = "br0";
+          Bridge = "br-lan";
           ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
       };
       # # Configure the bridge for its desired function
-      "40-br0" = {
-        matchConfig.Name = "br0";
+      "40-br-lan" = {
+        matchConfig.Name = "br-lan";
         bridgeConfig = { };
         linkConfig = {
           # or "routable" with IP addresses configured
@@ -131,7 +131,7 @@
     enable = true;
     radios = {
       wlan0 = {
-        hwMode = "g";
+        band = "2g";
         countryCode = "PL";
         channel = 0; # ACS
 
@@ -149,7 +149,7 @@
             };
             bssid = "36:b9:02:21:08:00";
             settings = {
-              bridge = "br0";
+              bridge = "br-lan";
             };
           };
           # Uncomment when needed otherwise remove
@@ -161,7 +161,7 @@
             managementFrameProtection = "optional";
             bssid = "e6:02:43:07:00:00";
             settings = {
-              bridge = "br0";
+              bridge = "br-lan";
               wpa = lib.mkForce 2;
               wpa_key_mgmt = "WPA-PSK";
               wpa_pairwise = "CCMP";
@@ -171,7 +171,7 @@
         };
       };
       wlan1 = {
-        hwMode = "a";
+        band = "5g";
         # channels with 160 MHz width in Poland: 36, 52, 100 i 116
         channel = 0; # ACS
         countryCode = "PL";
@@ -254,7 +254,7 @@
             };
             bssid = "36:b9:02:21:08:a2";
             settings = {
-              bridge = "br0";
+              bridge = "br-lan";
             };
           };
         };
@@ -275,7 +275,7 @@
       no-resolv = true;
 
       dhcp-range = [ "192.168.10.100,192.168.10.254" ];
-      interface = "br0";
+      interface = "br-lan";
       dhcp-host = "192.168.10.1";
 
       # local domains
