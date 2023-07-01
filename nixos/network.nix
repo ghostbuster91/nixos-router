@@ -95,18 +95,16 @@
         };
         linkConfig.RequiredForOnline = "enslaved";
       };
-      # # Configure the bridge for its desired function
+      # Configure the bridge for its desired function
       "40-br-lan" = {
         matchConfig.Name = "br-lan";
         bridgeConfig = { };
-        linkConfig = {
-          # or "routable" with IP addresses configured
-          # RequiredForOnline = "carrier";
-        };
         address = [
           "192.168.10.1/24"
         ];
         networkConfig = { };
+        # Don't wait for it as it also would wait for wlan and DFS which takes around 5 min 
+        linkConfig.RequiredForOnline = "no";
       };
       "10-wan" = {
         matchConfig.Name = "wan";
