@@ -83,11 +83,11 @@
     },
     "hostapd": {
       "locked": {
-        "lastModified": 1687821833,
-        "narHash": "sha256-8CRGvhT+0aJVlv65i9i8x3OVq0deQjirgIhpXeYKP4o=",
+        "lastModified": 1688297561,
+        "narHash": "sha256-Adxx5sJxZCWwEJzY5b0aO/CHUtOAIjQrqkiD7ZxGbXk=",
         "owner": "oddlama",
         "repo": "nixpkgs",
-        "rev": "49ee8a3b6dfa19347f2bf5d1b5cd4d597f0e1eb4",
+        "rev": "1fa9f03eecdbe55248fd5971b66f71c0104115fe",
         "type": "github"
       },
       "original": {
