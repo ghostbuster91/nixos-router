@@ -270,7 +270,7 @@
       bogus-priv = true;
       no-resolv = true;
 
-      dhcp-range = [ "192.168.10.100,192.168.10.254" ];
+      dhcp-range = [ "br-lan,192.168.10.50,192.168.10.254,24h" ];
       interface = "br-lan";
       dhcp-host = "192.168.10.1";
 
