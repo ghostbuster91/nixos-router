@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1686976778,
-        "narHash": "sha256-YNlqYJuUqs9FcbP3/yf/jN1rQd3Ijn1N4+wad9U1JXM=",
+        "lastModified": 1688259392,
+        "narHash": "sha256-3tBymRENh3Y7kOLVM2AMxZ5P3nB7yLi7h6CxWvCv82c=",
         "owner": "nakato",
         "repo": "nixos-bpir3-example",
-        "rev": "96535bf583bf2fcbf6d7d95e4b5eab730b850d4e",
+        "rev": "b3de65ea1ebd49b3fbe3fd7679707c1db1e0ab37",
         "type": "github"
       },
       "original": {
