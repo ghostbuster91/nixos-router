@@ -54,3 +54,8 @@ details about radio devices
 ```sh
 $ iw list
 ```
+
+list connected clients
+```sh
+$ arp
+```
