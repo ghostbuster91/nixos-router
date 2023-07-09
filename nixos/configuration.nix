@@ -3,7 +3,7 @@
   disabledModules = [ "services/networking/hostapd.nix" ];
 
   imports = [
-    ./sops.nix
+    # ./sops.nix
     ./network.nix
     "${hostapd}/nixos/modules/services/networking/hostapd.nix"
     (import ./disko-config.nix {
