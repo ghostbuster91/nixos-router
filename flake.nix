@@ -77,7 +77,7 @@
             ./nixos/configuration.nix
             home-manager.nixosModules.home-manager
             disko.nixosModules.disko
-            # sops-nix.nixosModules.sops
+            sops-nix.nixosModules.sops
             nixos-nftables-firewall.nixosModules.default
             {
               home-manager = {
