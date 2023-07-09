@@ -21,7 +21,7 @@
             {
               name = "tmp";
               start = "20G";
-              end = "40G";
+              end = "60G";
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -29,19 +29,9 @@
               };
             }
             {
-              name = "home";
-              start = "40G";
-              end = "60G";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/home";
-              };
-            }
-            {
               name = "var";
               start = "60G";
-              end = "80G";
+              end = "100G";
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -50,7 +40,7 @@
             }
             {
               name = "swap";
-              start = "-80G";
+              start = "100G";
               end = "100%";
               content = {
                 type = "swap";
