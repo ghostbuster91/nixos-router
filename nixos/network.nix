@@ -67,6 +67,7 @@
         matchConfig.Name = "lan0";
         networkConfig = {
           Bridge = "br-lan";
+          ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
       };
@@ -74,6 +75,7 @@
         matchConfig.Name = "lan1";
         networkConfig = {
           Bridge = "br-lan";
+          ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
       };
@@ -81,6 +83,7 @@
         matchConfig.Name = "lan2";
         networkConfig = {
           Bridge = "br-lan";
+          ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
       };
@@ -88,6 +91,7 @@
         matchConfig.Name = "lan3";
         networkConfig = {
           Bridge = "br-lan";
+          ConfigureWithoutCarrier = true;
         };
         linkConfig.RequiredForOnline = "enslaved";
       };
@@ -98,9 +102,7 @@
         address = [
           "192.168.10.1/24"
         ];
-        networkConfig = { 
-          ConfigureWithoutCarrier = true;
-        };
+        networkConfig = { };
         # Don't wait for it as it also would wait for wlan and DFS which takes around 5 min 
         linkConfig.RequiredForOnline = "no";
       };
