@@ -102,7 +102,9 @@
         address = [
           "192.168.10.1/24"
         ];
-        networkConfig = { };
+        networkConfig = {
+          ConfigureWithoutCarrier = true;
+        };
         # Don't wait for it as it also would wait for wlan and DFS which takes around 5 min 
         linkConfig.RequiredForOnline = "no";
       };
