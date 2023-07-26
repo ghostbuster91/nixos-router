@@ -20,33 +20,42 @@
     # Use the nftables firewall instead of the base nixos scripted rules.
     # This flake provides a similar utility to the base nixos scripting.
     # https://github.com/thelegy/nixos-nftables-firewall/tree/main
-    nftables = {
+        nftables = {
       enable = true;
-      stopRuleset = "";
-      firewall = {
-        enable = true;
-        zones = {
-          lan.interfaces = [ "br-lan" ];
-          wan.interfaces = [ "wan" ];
-        };
-        rules = {
-          lan = {
-            from = [ "lan" ];
-            to = [ "fw" ];
-            verdict = "accept";
-          };
-          outbound = {
-            from = [ "lan" ];
-            to = [ "lan" "wan" ];
-            verdict = "accept";
-          };
-          nat = {
-            from = [ "lan" ];
-            to = [ "wan" ];
-            masquerade = true;
-          };
-        };
-      };
+      checkRuleset = false;
+      ruleset = ''
+        table inet filter {
+           flowtable f {
+             hook ingress priority 0; 
+             devices = { "wan", "lan0", "lan1", "lan2", "lan3" };
+             flags offload;
+           }
+
+          chain input {
+            type filter hook input priority 0; policy drop;
+
+            iifname { "br-lan" } accept comment "Allow local network to access the router"
+            iifname "wan" ct state { established, related } accept comment "Allow established traffic"
+            iifname "wan" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
+            iifname "wan" counter drop comment "Drop all other unsolicited traffic from wan"
+            iifname "lo" accept comment "Accept everything from loopback interface"
+          }
+          chain forward {
+            type filter hook forward priority filter; policy drop;
+            ip protocol { tcp, udp } flow offload @f
+
+            iifname { "br-lan" } oifname { "wan" } accept comment "Allow trusted LAN to WAN"
+            iifname { "wan" } oifname { "br-lan" } ct state established, related accept comment "Allow established back to LANs"
+          }
+        }
+        
+        table ip nat {
+          chain postrouting {
+            type nat hook postrouting priority 100; policy accept;
+            oifname "wan" masquerade
+          } 
+        }
+      '';
     };
   };
 
