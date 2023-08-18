@@ -3,7 +3,6 @@
   disabledModules = [ "services/networking/hostapd.nix" ];
 
   imports = [
-    ./sops.nix
     ./network.nix
     "${hostapd}/nixos/modules/services/networking/hostapd.nix"
     (import ./disko-config.nix {
@@ -74,7 +73,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      hostapd = hostapdPackages.aarch64-linux.hostapd;
+      inherit (hostapdPackages.aarch64-linux) hostapd;
     };
   };
 

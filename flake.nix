@@ -60,39 +60,61 @@
 
       nixosModules = import ./modules;
 
-      nixosConfigurations = {
-        surfer = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          specialArgs = {
-            inherit self;
-            inherit (self.packages.aarch64-linux) armTrustedFirmwareMT7986;
-            inherit username;
-            inherit hostapd;
-            inherit hostapdPackages;
-            inherit bpir3;
+      nixosConfigurations =
+        let
+          createSystem = modules: kernelPackages: nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            specialArgs = {
+              inherit self;
+              inherit (self.packages.aarch64-linux) armTrustedFirmwareMT7986;
+              inherit username;
+              inherit hostapd;
+              inherit hostapdPackages;
+              inherit kernelPackages;
+            };
+            modules = [
+              home-manager.nixosModules.home-manager
+              disko.nixosModules.disko
+              nixos-nftables-firewall.nixosModules.default
+              {
+                home-manager = {
+                  useUserPackages = true;
+                  useGlobalPkgs = true;
+                  users.${username} = ./nixos/home.nix;
+                  extraSpecialArgs = { inherit username; };
+                };
+              }
+              # flake registry
+              {
+                nix.registry.nixpkgs.flake = nixpkgs;
+              }
+            ] ++ modules;
           };
-          modules = [
-            "${bpir3}/lib/sd-image-mt7986.nix"
-            ./nixos/hardware-configuration.nix
-            ./nixos/configuration.nix
-            home-manager.nixosModules.home-manager
-            disko.nixosModules.disko
-            sops-nix.nixosModules.sops
-            nixos-nftables-firewall.nixosModules.default
-            {
-              home-manager = {
-                useUserPackages = true;
-                useGlobalPkgs = true;
-                users.${username} = ./nixos/home.nix;
-                extraSpecialArgs = { inherit username; };
-              };
-            }
-            # flake registry
-            {
-              nix.registry.nixpkgs.flake = nixpkgs;
-            }
-          ];
+        in
+        {
+          surfer =
+            let
+              modules = [
+                ./nixos/hardware-configuration.nix
+                ./nixos/configuration.nix
+                ./nixos/hostapd.nix
+                ./nixos/sops.nix
+                sops-nix.nixosModules.sops
+              ];
+            in
+            createSystem modules bpir3.packages.aarch64-linux.linuxPackages_bpir3;
+          # By default there is no swap and bpir3 doesn't have enough RAM to compile full kernel
+          # Besides that, the default image does not contain key to decrypt sops-nix secrets which is needed for the wifi to start 
+          # Without wlan interfaces the br-lan intreface is unable to come-up online which prevents logging into the device. 
+          bootstrap =
+            let
+              modeles = [
+                ./nixos/hardware-configuration.nix
+                ./nixos/configuration.nix
+                "${bpir3}/lib/sd-image-mt7986.nix"
+              ];
+            in
+            createSystem modules bpir3.packages.aarch64-linux.linuxPackages_bpir3_minimal;
         };
-      };
     };
 }
