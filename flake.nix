@@ -71,6 +71,7 @@
               inherit hostapd;
               inherit hostapdPackages;
               inherit kernelPackages;
+              inherit bpir3;
             };
             modules = [
               home-manager.nixosModules.home-manager

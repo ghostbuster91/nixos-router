@@ -1,4 +1,4 @@
-({ config, lib, kernelPackages, ... }: {
+({ config, lib, kernelPackages, bpir3, ... }: {
   boot.kernelPackages = kernelPackages;
   # We exclude a number of modules included in the default list. A non-insignificant amount do
   # not apply to embedded hardware like this, so simply skip the defaults.
