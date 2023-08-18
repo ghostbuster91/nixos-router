@@ -108,7 +108,7 @@
           # Without wlan interfaces the br-lan intreface is unable to come-up online which prevents logging into the device. 
           bootstrap =
             let
-              modeles = [
+              modules = [
                 ./nixos/hardware-configuration.nix
                 ./nixos/configuration.nix
                 "${bpir3}/lib/sd-image-mt7986.nix"
