@@ -16,7 +16,6 @@
     };
     bpir3 = {
       url = "github:nakato/nixos-bpir3-example";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-nftables-firewall = {
       url = "github:thelegy/nixos-nftables-firewall";
