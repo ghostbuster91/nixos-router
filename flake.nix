@@ -100,6 +100,7 @@
                 ./nixos/hostapd.nix
                 ./nixos/sops.nix
                 sops-nix.nixosModules.sops
+                "${bpir3}/lib/sd-image-mt7986.nix"
               ];
             in
             createSystem modules bpir3.packages.aarch64-linux.linuxPackages_bpir3;
