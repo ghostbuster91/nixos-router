@@ -5,7 +5,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hostapd.url = "github:oddlama/nixpkgs";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +26,6 @@
     { self
     , nixpkgs
     , home-manager
-    , hostapd
     , disko
     , sops-nix
     , bpir3
@@ -38,12 +36,6 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
       username = "kghost";
-      hostapdPackages = forAllSystems (system:
-        let
-          pkgs = hostapd.legacyPackages.${system};
-        in
-        pkgs
-      );
     in
     {
       formatter = forAllSystems (system:
@@ -67,8 +59,6 @@
               inherit self;
               inherit (self.packages.aarch64-linux) armTrustedFirmwareMT7986;
               inherit username;
-              inherit hostapd;
-              inherit hostapdPackages;
               inherit kernelPackages;
               inherit bpir3;
             };

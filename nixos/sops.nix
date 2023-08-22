@@ -1,4 +1,4 @@
-{ lib, pkgs, hostapd, username, ... }: {
+{ lib, pkgs, username, ... }: {
   # This will add secrets.yml to the nix store
   # You can avoid this by adding a string to the full path instead, i.e.
   # This will automatiycally import SSH keys as age keys

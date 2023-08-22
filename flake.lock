@@ -79,21 +79,6 @@
         "type": "github"
       }
     },
-    "hostapd": {
-      "locked": {
-        "lastModified": 1688297561,
-        "narHash": "sha256-Adxx5sJxZCWwEJzY5b0aO/CHUtOAIjQrqkiD7ZxGbXk=",
-        "owner": "oddlama",
-        "repo": "nixpkgs",
-        "rev": "1fa9f03eecdbe55248fd5971b66f71c0104115fe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oddlama",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixos-nftables-firewall": {
       "inputs": {
         "dependencyDagOfSubmodule": "dependencyDagOfSubmodule",
@@ -168,7 +153,6 @@
         "bpir3": "bpir3",
         "disko": "disko",
         "home-manager": "home-manager",
-        "hostapd": "hostapd",
         "nixos-nftables-firewall": "nixos-nftables-firewall",
         "nixpkgs": "nixpkgs_2",
         "sops-nix": "sops-nix"

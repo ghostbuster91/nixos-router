@@ -1,10 +1,7 @@
-{ config, lib, pkgs, hostapd, hostapdPackages, username, ... }: {
-
-  disabledModules = [ "services/networking/hostapd.nix" ];
+{ config, lib, pkgs, username, ... }: {
 
   imports = [
     ./network.nix
-    "${hostapd}/nixos/modules/services/networking/hostapd.nix"
     (import ./disko-config.nix {
       disks = [ "/dev/nvme0n1" ];
     })
@@ -72,16 +69,8 @@
   # Allow unfree packages
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      inherit (hostapdPackages.aarch64-linux) hostapd;
-    };
   };
 
-  # nixpkgs.overlays = [ (final: prev: 
-  #   services = prev.services.extend(final': prev': {
-  #     hostapd= hostapd.services.
-  #   });
-  # ) ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
