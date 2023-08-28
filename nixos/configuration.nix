@@ -30,7 +30,7 @@
     in
     {
       enable = true;
-      dates = "04:00";
+      dates = "weekly";
       flake = "${homeDir}/nixos-router";
       flags = [
         "--update-input"
