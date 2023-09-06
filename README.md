@@ -74,3 +74,15 @@ list connected clients
 ```sh
 $ arp
 ```
+
+To see the status of the timer run
+
+```sh
+$ systemctl status nixos-upgrade.timer
+```
+
+The upgrade log can be printed with this command
+
+```sh
+$ systemctl status nixos-upgrade.service
+```
