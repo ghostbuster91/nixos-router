@@ -31,7 +31,7 @@
     , bpir3
     , nixos-nftables-firewall
     , ...
-    }@attrs:
+    }@inputs:
     let
       systems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -61,6 +61,7 @@
               inherit username;
               inherit kernelPackages;
               inherit bpir3;
+              inherit inputs;
             };
             modules = [
               home-manager.nixosModules.home-manager

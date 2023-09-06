@@ -1,4 +1,4 @@
-{ config, lib, pkgs, username, ... }: {
+{ config, lib, pkgs, username, inputs, ... }: {
 
   imports = [
     ./network.nix
@@ -14,9 +14,9 @@
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "no";
   services.openssh.settings.PasswordAuthentication = false;
-  users.users.kghost = {
-    name = "kghost";
-    home = "/home/kghost";
+  users.users.${username} = {
+    name = username;
+    home = "/home/${username}";
     isNormalUser = true;
     extraGroups = [ "wheel" "network" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
@@ -24,17 +24,14 @@
     initialHashedPassword = "$y$j9T$aeZHaSe8QKeC0ruAi9TKo.$zooI/IZUwOupVDbMReaukiargPrF93H/wdR/.0zsrr.";
   };
 
-  system.autoUpgrade =
-    let
-      homeDir = config.users.users.${username}.home;
-    in
-    {
+  system.autoUpgrade = {
       enable = true;
       dates = "weekly";
-      flake = "${homeDir}/nixos-router";
+      flake = inputs.self.outPath;
       flags = [
         "--update-input"
         "nixpkgs"
+        "-L"
       ];
       allowReboot = true;
       rebootWindow = {
