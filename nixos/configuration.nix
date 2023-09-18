@@ -9,7 +9,10 @@
   ];
   system.stateVersion = lib.mkDefault "22.11";
 
-  # powerManagement.cpuFreqGovernor = "ondemand"; TODO: missing some kernel module
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "ondemand";
+  };
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "no";
@@ -25,20 +28,20 @@
   };
 
   system.autoUpgrade = {
-      enable = true;
-      dates = "weekly";
-      flake = inputs.self.outPath;
-      flags = [
-        "--update-input"
-        "nixpkgs"
-        "-L"
-      ];
-      allowReboot = true;
-      rebootWindow = {
-        lower = "02:00";
-        upper = "04:00";
-      };
+    enable = true;
+    dates = "weekly";
+    flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "-L"
+    ];
+    allowReboot = true;
+    rebootWindow = {
+      lower = "02:00";
+      upper = "04:00";
     };
+  };
 
   programs = {
     zsh.enable = true;
@@ -104,6 +107,7 @@
     sysstat
     lm_sensors # for `sensors` command
     pciutils
+    lshw
 
     # archives
     zip
