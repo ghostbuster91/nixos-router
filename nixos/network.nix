@@ -17,10 +17,7 @@
     nat.enable = false;
     firewall.enable = false;
 
-    # Use the nftables firewall instead of the base nixos scripted rules.
-    # This flake provides a similar utility to the base nixos scripting.
-    # https://github.com/thelegy/nixos-nftables-firewall/tree/main
-        nftables = {
+    nftables = {
       enable = true;
       checkRuleset = false;
       ruleset = ''
