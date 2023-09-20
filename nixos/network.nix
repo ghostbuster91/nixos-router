@@ -39,10 +39,10 @@
           }
           chain forward {
             type filter hook forward priority filter; policy drop;
-            ip protocol { tcp, udp } flow offload @f
+            ip protocol { tcp, udp } ct state { established, related } flow offload @f comment "Offload tcp/udp established traffic"
 
             iifname { "br-lan" } oifname { "wan" } accept comment "Allow trusted LAN to WAN"
-            iifname { "wan" } oifname { "br-lan" } ct state established, related accept comment "Allow established back to LANs"
+            iifname { "wan" } oifname { "br-lan" } ct state { established, related } accept comment "Allow established back to LANs"
           }
         }
         
