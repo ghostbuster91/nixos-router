@@ -87,7 +87,7 @@ in
     '';
     history = { extended = true; };
     shellAliases = {
-      lsd = "${pkgs.exa}/bin/exa --long --header --git --all";
+      lsd = "${pkgs.eza}/bin/exa --long --header --git --all";
     };
   };
 }
