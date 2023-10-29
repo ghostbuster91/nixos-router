@@ -28,7 +28,7 @@
   };
 
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     dates = "weekly";
     flake = inputs.self.outPath;
     flags = [
