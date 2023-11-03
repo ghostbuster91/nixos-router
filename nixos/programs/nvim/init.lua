@@ -28,7 +28,7 @@ require("neoclip").setup()
 require("telescope").load_extension("neoclip")
 map("n", '<leader>"', require("telescope").extensions.neoclip.star, { desc = "clipboard" })
 
-require("indent_blankline").setup()
+require("ibl").setup()
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
