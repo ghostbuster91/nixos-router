@@ -5,6 +5,8 @@
       sysctl = {
         "net.ipv4.conf.all.forwarding" = true;
         "net.ipv6.conf.all.forwarding" = true;
+        "net.ipv4.conf.br-lan.rp_filter" = 1;
+        "net.ipv4.conf.wan.rp_filter" = 1;
       };
     };
   };
