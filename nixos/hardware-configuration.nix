@@ -11,9 +11,9 @@
   boot.initrd.availableKernelModules = [ "nvme" ];
 
   boot.kernelParams = [ "console=ttyS0,115200" ];
-  boot.extraModprobeConfig = ''
-    options mt7915e wed_enable=Y
-  '';
+  # boot.extraModprobeConfig = ''
+  #   options mt7915e wed_enable=Y
+  # '';
   hardware.enableRedistributableFirmware = true;
   # Wireless hardware exists, regulatory database is essential.
   hardware.wirelessRegulatoryDatabase = true;
