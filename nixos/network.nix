@@ -164,5 +164,5 @@
   };
 
   # The service irqbalance is useful as it assigns certain IRQ calls to specific CPUs instead of letting the first CPU core to handle everything. This is supposed to increase performance by hitting CPU cache more often.
-  services.irqbalance.enable = true;
+  # services.irqbalance.enable = true;
 }
