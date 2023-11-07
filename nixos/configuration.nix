@@ -9,10 +9,10 @@
   ];
   system.stateVersion = lib.mkDefault "22.11";
 
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "ondemand";
-  };
+  # powerManagement = {
+  #   enable = true;
+  #   cpuFreqGovernor = "ondemand";
+  # };
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "no";
