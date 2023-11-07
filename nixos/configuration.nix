@@ -27,6 +27,8 @@
     initialHashedPassword = "$y$j9T$aeZHaSe8QKeC0ruAi9TKo.$zooI/IZUwOupVDbMReaukiargPrF93H/wdR/.0zsrr.";
   };
 
+  services.journald.extraConfig = "SystemMaxUse=100M";
+
   system.autoUpgrade = {
     enable = false;
     dates = "weekly";
