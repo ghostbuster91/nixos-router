@@ -159,7 +159,10 @@
 
       # don't use /etc/hosts as this would advertise surfer as localhost
       no-hosts = true;
-      address = "/surfer.lan/192.168.10.1";
+      address = [
+        "/surfer.lan/192.168.10.1"
+        "/.deckard.lan/192.168.10.113"
+      ];
     };
   };
 
