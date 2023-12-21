@@ -30,11 +30,11 @@
       };
     };
   };
-    services.promtail = {
+  services.promtail = {
     enable = true;
     configuration = {
       server = {
-        disable=true;
+        disable = true;
       };
       # positions = {
       #   filename = "/var/log/positions.yaml";
