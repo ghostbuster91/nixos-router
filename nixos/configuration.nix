@@ -29,6 +29,8 @@
 
   services.journald.extraConfig = "SystemMaxUse=100M";
 
+  security.sudo.wheelNeedsPassword = false;
+
   system.autoUpgrade = {
     enable = false;
     dates = "weekly";
