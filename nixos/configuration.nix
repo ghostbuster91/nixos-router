@@ -61,7 +61,11 @@
   i18n.defaultLocale = "en_US.UTF-8";
   # enable flakes globally
   nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" username ];
+
+    };
     package = pkgs.nixVersions.stable;
     gc = {
       automatic = true;
