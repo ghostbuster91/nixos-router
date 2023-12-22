@@ -16,6 +16,8 @@
     bpir3 = {
       url = "github:nakato/nixos-bpir3-example";
     };
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -25,6 +27,7 @@
     , disko
     , sops-nix
     , bpir3
+    , nix-index-database
     , ...
     }@inputs:
     let
@@ -66,7 +69,7 @@
                   useUserPackages = true;
                   useGlobalPkgs = true;
                   users.${username} = ./nixos/home.nix;
-                  extraSpecialArgs = { inherit username; };
+                  extraSpecialArgs = { inherit username; inherit inputs; };
                 };
               }
               # flake registry

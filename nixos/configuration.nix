@@ -52,6 +52,7 @@
     ssh = {
       startAgent = true;
     };
+    command-not-found.enable = false;
   };
 
   # Set your time zone.
