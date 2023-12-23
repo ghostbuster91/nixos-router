@@ -14,7 +14,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     bpir3 = {
-      url = "github:nakato/nixos-bpir3-example";
+      url = "github:steveej-forks/nixos-bpir3/linux-6.6";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
@@ -95,15 +96,15 @@
           # By default there is no swap and bpir3 doesn't have enough RAM to compile full kernel
           # Besides that, the default image does not contain key to decrypt sops-nix secrets which is needed for the wifi to start 
           # Without wlan interfaces the br-lan intreface is unable to come-up online which prevents logging into the device. 
-          bootstrap =
-            let
-              modules = [
-                ./nixos/hardware-configuration.nix
-                ./nixos/configuration.nix
-                "${bpir3}/lib/sd-image-mt7986.nix"
-              ];
-            in
-            createSystem modules bpir3.packages.aarch64-linux.linuxPackages_bpir3_minimal;
+          # bootstrap =
+          #   let
+          #     modules = [
+          #       ./nixos/hardware-configuration.nix
+          #       ./nixos/configuration.nix
+          #       "${bpir3}/lib/sd-image-mt7986.nix"
+          #     ];
+          #   in
+          #   createSystem modules nixpkgs.callPackage (bpir3.packages.aarch64-linux {inherit (nixpkgs) linux_6_6;}).linuxPackages_bpir3;
         };
     };
 }
