@@ -4,8 +4,14 @@ _Based on https://github.com/nakato/nixos-bpir3-example_
 
 Build an SD-Image with:
 
-```
+```sh
 $ nix build -L '.#nixosConfigurations.bpir3.config.system.build.sdImage'
+```
+
+Building using nixbuild remote builder:
+
+```sh
+$ nixos-rebuild --max-jobs 0  --builders "ssh://eu.nixbuild.net aarch64-linux - 100 1 big-parallel,benchmark" --flake .#surfer --target-host surfer --fast --use-remote-sudo switch
 ```
 
 generate age key from ssh using:
