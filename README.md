@@ -2,17 +2,23 @@
 
 _Based on https://github.com/nakato/nixos-bpir3-example_
 
+## Getting started
+
 Build an SD-Image with:
 
 ```sh
 $ nix build -L '.#nixosConfigurations.bpir3.config.system.build.sdImage'
 ```
 
+At this moment the wifi password is not set because the SD card image does not contain ssh key to decrypt sops secrets. Copy the ssh key and reboot the device.
+
 Building using nixbuild remote builder:
 
 ```sh
 $ nixos-rebuild --max-jobs 0  --builders "ssh://eu.nixbuild.net aarch64-linux - 100 1 big-parallel,benchmark" --flake .#surfer --target-host surfer --fast --use-remote-sudo switch
 ```
+
+## Useful commands
 
 generate age key from ssh using:
 
