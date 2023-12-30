@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, lib, ... }:
 let
   omz = pkgs.fetchFromGitHub
     {
