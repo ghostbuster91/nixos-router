@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, ... }:
 {
   # wireless access point
   services.hostapd = {
@@ -24,22 +24,6 @@
             bssid = "36:b9:02:21:08:00";
             settings = {
               bridge = "br-lan";
-            };
-          };
-          # Uncomment when needed otherwise remove
-          wlan0-1 = {
-            ssid = "koteczkowo3";
-            authentication = {
-              mode = "none"; # this is overriden by settings
-            };
-            managementFrameProtection = "optional";
-            bssid = "e6:02:43:07:00:00";
-            settings = {
-              bridge = "br-lan";
-              wpa = lib.mkForce 2;
-              wpa_key_mgmt = "WPA-PSK";
-              wpa_pairwise = "CCMP";
-              wpa_psk_file = config.sops.secrets.legacyWifiPassword.path;
             };
           };
         };

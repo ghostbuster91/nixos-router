@@ -1,4 +1,9 @@
-({ config, lib, kernelPackages, bpir3, ... }: {
+({ inputs, ... }:
+let
+  inherit (inputs) bpir3;
+  kernelPackages = bpir3.packages.aarch64-linux.linuxPackages_bpir3;
+in
+{
   boot.kernelPackages = kernelPackages;
   # We exclude a number of modules included in the default list. A non-insignificant amount do
   # not apply to embedded hardware like this, so simply skip the defaults.
@@ -11,9 +16,9 @@
   boot.initrd.availableKernelModules = [ "nvme" ];
 
   boot.kernelParams = [ "console=ttyS0,115200" ];
-  # boot.extraModprobeConfig = ''
-  #   options mt7915e wed_enable=Y
-  # '';
+  boot.extraModprobeConfig = ''
+    options mt7915e wed_enable=Y
+  '';
   hardware.enableRedistributableFirmware = true;
   # Wireless hardware exists, regulatory database is essential.
   hardware.wirelessRegulatoryDatabase = true;

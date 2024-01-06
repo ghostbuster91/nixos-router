@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ ... }:
 {
   boot = {
     kernel = {
@@ -159,10 +159,13 @@
 
       # don't use /etc/hosts as this would advertise surfer as localhost
       no-hosts = true;
-      address = "/surfer.lan/192.168.10.1";
+      address = [
+        "/surfer.lan/192.168.10.1"
+        "/.deckard.lan/192.168.10.113"
+      ];
     };
   };
 
   # The service irqbalance is useful as it assigns certain IRQ calls to specific CPUs instead of letting the first CPU core to handle everything. This is supposed to increase performance by hitting CPU cache more often.
-  # services.irqbalance.enable = true;
+  services.irqbalance.enable = false;
 }

@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, lib, username, ... }: {
+{ pkgs, username, ... }: {
 
   home = {
     inherit username;
@@ -11,12 +11,6 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
-
-  imports = [
-    ./programs/nvim
-    ./programs/git
-    ./programs/zsh
-  ];
 
   home.packages = with pkgs; [
     nix-tree

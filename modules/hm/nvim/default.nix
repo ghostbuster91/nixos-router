@@ -79,13 +79,10 @@ in
             tree-sitter-java
             tree-sitter-python
             tree-sitter-go
-            tree-sitter-hocon
             tree-sitter-sql
             tree-sitter-graphql
             tree-sitter-dockerfile
-            tree-sitter-scheme
             tree-sitter-rust
-            tree-sitter-smithy
           ]
       ))
       nvim-treesitter-textobjects
