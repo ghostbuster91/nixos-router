@@ -1,8 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    nixos-sbc = {
+      url = "github:nakato/nixos-sbc/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {
@@ -11,10 +12,6 @@
     };
     sops = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    bpir3 = {
-      url = "github:steveej-forks/nixos-bpir3/linux-6.6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database.url = "github:Mic92/nix-index-database";
