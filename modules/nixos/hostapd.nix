@@ -26,6 +26,7 @@
               bridge = "br-lan";
             };
           };
+          ## working with esp8266 & rpi5
           wlan0-1 = {
             ssid = "koteczkowo3";
             authentication = {
@@ -43,6 +44,7 @@
               # sae_require_mfp = false;
             };
           };
+          # working with rpi5
           # wlan0-1 = {
           #   ssid = "koteczkowo3";
           #   authentication = {
