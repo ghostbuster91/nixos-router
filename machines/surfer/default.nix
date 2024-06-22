@@ -16,6 +16,7 @@
       inputs.self.nixosModules.sshd
       inputs.self.nixosModules.monitoring
       inputs.self.nixosModules.network
+      inputs.self.nixosModules.rpi-builder
       # inputs.self.nixosModules.hostapd
       inputs.home-manager.nixosModule
 

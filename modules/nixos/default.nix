@@ -6,6 +6,7 @@
     network = ./network.nix;
     sshd = ./sshd.nix;
     nix = ./nix.nix;
+    rpi-builder = ./rpi-builder.nix;
   };
 
 }

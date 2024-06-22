@@ -3,7 +3,7 @@
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
-    stateVersion = "22.05";
+    stateVersion = "24.05";
   };
 
   # Let Home Manager install and manage itself.
@@ -39,6 +39,12 @@
     };
     ssh = {
       enable = true;
+      extraConfig = ''
+        Host rpi5
+          IdentitiesOnly yes
+          IdentityFile /home/kghost/.ssh/nixremote
+          User nixremote
+      '';
     };
   };
 }
