@@ -24,7 +24,7 @@
       {
         sbc = {
           version = "0.2";
-          bootstrap.rootFilesystem = "btrfs";
+          bootstrap.rootFilesystem = "ext4";
           wireless.wifi.acceptRegulatoryResponsibility = true;
         };
       }

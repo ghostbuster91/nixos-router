@@ -5,11 +5,9 @@
         device = builtins.elemAt disks 0;
         type = "disk";
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "var-log";
+          type = "gpt";
+          partitions = {
+            "var-log" = {
               start = "1MiB";
               end = "20G";
               content = {
@@ -17,9 +15,8 @@
                 format = "ext4";
                 mountpoint = "/var/log";
               };
-            }
-            {
-              name = "tmp";
+            };
+            "tmp" = {
               start = "20G";
               end = "60G";
               content = {
@@ -27,9 +24,8 @@
                 format = "ext4";
                 mountpoint = "/tmp";
               };
-            }
-            {
-              name = "var";
+            };
+            "var" = {
               start = "60G";
               end = "100G";
               content = {
@@ -37,17 +33,16 @@
                 format = "ext4";
                 mountpoint = "/var";
               };
-            }
-            {
-              name = "swap";
+            };
+            "swap" = {
               start = "100G";
               end = "100%";
               content = {
                 type = "swap";
                 randomEncryption = false;
               };
-            }
-          ];
+            };
+          };
         };
       };
     };

@@ -21,7 +21,6 @@
   programs = {
     exa = {
       enable = true;
-      enableAliases = true;
     };
     fzf = {
       enable = true;
