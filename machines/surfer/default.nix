@@ -4,10 +4,10 @@
 
   imports =
     [
-      inputs.disko.nixosModules.default
-      (import ./disko-config.nix {
-        disks = [ "/dev/nvme0n1" ];
-      })
+      # inputs.disko.nixosModules.default
+      # (import ./disko-config.nix {
+      #   disks = [ "/dev/nvme0n1" ];
+      # })
       inputs.sops.nixosModules.default
       ./secrets.nix
       inputs.self.nixosModules.nix
@@ -16,7 +16,7 @@
       inputs.self.nixosModules.sshd
       inputs.self.nixosModules.monitoring
       inputs.self.nixosModules.network
-      inputs.self.nixosModules.hostapd
+      # inputs.self.nixosModules.hostapd
       inputs.home-manager.nixosModule
 
       inputs.nixos-sbc.nixosModules.default
