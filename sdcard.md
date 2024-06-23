@@ -1,4 +1,4 @@
-# SD-CARD
+# SDCARD
 
 **Always umount mmc before running any commands against it!**
 
