@@ -26,40 +26,40 @@
               bridge = "br-lan";
             };
           };
-          ## working with esp8266 & rpi5
-          wlan0-1 = {
-            ssid = "koteczkowo3";
-            authentication = {
-              mode = "none"; # this is overriden by settings
-            };
-            bssid = "e6:02:43:07:00:00";
-            settings = {
-              bridge = "br-lan";
-              wmm_enabled = false;
-              ieee80211w = "0";
-              wpa = lib.mkForce 2;
-              wpa_key_mgmt = "WPA-PSK";
-              wpa_pairwise = "CCMP";
-              wpa_psk_file = config.sops.secrets.legacyWifiPassword.path;
-              # sae_require_mfp = false;
-            };
-          };
-          # working with rpi5
+          ## working with esp8266 but doesn't work with rpi5
           # wlan0-1 = {
           #   ssid = "koteczkowo3";
           #   authentication = {
-          #     mode = "wpa3-sae-transition"; # this is overriden by settings
-          #     wpaPskFile = config.sops.secrets.legacyWifiPassword.path;
-          #     saePasswordsFile = config.sops.secrets.legacyWifiPassword2.path;
+          #     mode = "none"; # this is overriden by settings
           #   };
-          #   # managementFrameProtection = "optional";
           #   bssid = "e6:02:43:07:00:00";
           #   settings = {
           #     bridge = "br-lan";
-          #     ieee80211w = "2";
+          #     wmm_enabled = false;
+          #     ieee80211w = "0";
+          #     wpa = lib.mkForce 2;
+          #     wpa_key_mgmt = "WPA-PSK";
+          #     wpa_pairwise = "CCMP";
+          #     wpa_psk_file = config.sops.secrets.legacyWifiPassword.path;
           #     # sae_require_mfp = false;
           #   };
           # };
+          # working with rpi5
+          wlan0-1 = {
+            ssid = "koteczkowo3";
+            authentication = {
+              mode = "wpa3-sae-transition"; # this is overriden by settings
+              wpaPskFile = config.sops.secrets.legacyWifiPassword.path;
+              saePasswordsFile = config.sops.secrets.legacyWifiPassword2.path;
+            };
+            # managementFrameProtection = "optional";
+            bssid = "e6:02:43:07:00:00";
+            settings = {
+              bridge = "br-lan";
+              ieee80211w = "2";
+              # sae_require_mfp = false;
+            };
+          };
         };
       };
       wlan1 = {
