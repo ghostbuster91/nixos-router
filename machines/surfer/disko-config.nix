@@ -10,6 +10,7 @@
             "var-log" = {
               start = "1MiB";
               end = "20G";
+              priority = 1;
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -19,6 +20,7 @@
             "tmp" = {
               start = "20G";
               end = "60G";
+              priority = 2;
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -28,20 +30,21 @@
             "var" = {
               start = "60G";
               end = "100G";
+              priority = 3;
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/var";
               };
             };
-            "swap" = {
-              start = "100G";
-              end = "100%";
-              content = {
-                type = "swap";
-                randomEncryption = false;
-              };
-            };
+            # "swap" = {
+            #   start = "100G";
+            #   end = "100%";
+            #   content = {
+            #     type = "swap";
+            #     randomEncryption = false;
+            #   };
+            # };
           };
         };
       };

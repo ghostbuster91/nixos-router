@@ -4,6 +4,7 @@
 
   imports =
     [
+      # PCIE fixup doesn't work atm: https://github.com/nakato/nixos-sbc/issues/9
       # inputs.disko.nixosModules.default
       # (import ./disko-config.nix {
       #   disks = [ "/dev/nvme0n1" ];
@@ -17,7 +18,7 @@
       inputs.self.nixosModules.monitoring
       inputs.self.nixosModules.network
       inputs.self.nixosModules.rpi-builder
-      # inputs.self.nixosModules.hostapd
+      inputs.self.nixosModules.hostapd
       inputs.home-manager.nixosModule
 
       inputs.nixos-sbc.nixosModules.default
