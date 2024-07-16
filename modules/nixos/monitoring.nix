@@ -40,7 +40,7 @@
       #   filename = "/var/log/positions.yaml";
       # };
       clients = [{
-        url = "http://loki.deckard.lan/loki/api/v1/push";
+        url = "http://loki.local/loki/api/v1/push";
       }];
       scrape_configs = [{
         job_name = "journal";
