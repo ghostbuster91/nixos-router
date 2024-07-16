@@ -1,4 +1,4 @@
-{ ... }: {
+{
   services.prometheus = {
     exporters = {
       node = {

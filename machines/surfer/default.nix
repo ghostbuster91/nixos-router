@@ -4,11 +4,11 @@
 
   imports =
     [
-      ./hardware-configuration.nix
-      inputs.disko.nixosModules.default
-      (import ./disko-config.nix {
-        disks = [ "/dev/nvme0n1" ];
-      })
+      # PCIE fixup doesn't work atm: https://github.com/nakato/nixos-sbc/issues/9
+      # inputs.disko.nixosModules.default
+      # (import ./disko-config.nix {
+      #   disks = [ "/dev/nvme0n1" ];
+      # })
       inputs.sops.nixosModules.default
       ./secrets.nix
       inputs.self.nixosModules.nix
@@ -17,9 +17,19 @@
       inputs.self.nixosModules.sshd
       inputs.self.nixosModules.monitoring
       inputs.self.nixosModules.network
+      inputs.self.nixosModules.rpi-builder
       inputs.self.nixosModules.hostapd
-      inputs.self.nixosModules.sd-image-mt7986
       inputs.home-manager.nixosModule
+
+      inputs.nixos-sbc.nixosModules.default
+      inputs.nixos-sbc.nixosModules.boards.bananapi.bpir3
+      {
+        sbc = {
+          version = "0.2";
+          bootstrap.rootFilesystem = "ext4";
+          wireless.wifi.acceptRegulatoryResponsibility = true;
+        };
+      }
     ];
 
   home-manager = {
@@ -43,5 +53,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 }

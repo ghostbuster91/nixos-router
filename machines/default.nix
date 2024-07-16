@@ -9,8 +9,6 @@ in
         modules = [ ./surfer ];
         specialArgs = {
           inherit inputs; inherit username;
-          # needed internally by build sdcard image
-          inherit (inputs.bpir3.packages.aarch64-linux) armTrustedFirmwareMT7986;
         };
       };
   };
