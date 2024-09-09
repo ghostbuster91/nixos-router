@@ -40,7 +40,11 @@
       #   filename = "/var/log/positions.yaml";
       # };
       clients = [{
-        url = "http://loki.local/loki/api/v1/push";
+        url = "https://loki.local/loki/api/v1/push";
+        # TODO validate against the real certificate
+        # This needs correct Subject Alternative Name to be assigned which needs subdomains 
+        # which needs moving to a public domain
+        tls_config.insecure_skip_verify = true;
       }];
       scrape_configs = [{
         job_name = "journal";
