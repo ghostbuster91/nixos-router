@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 {
   # wireless access point
   services.hostapd = {
@@ -21,9 +21,18 @@
               mode = "wpa3-sae";
               saePasswordsFile = config.sops.secrets.wifiPassword.path;
             };
-            bssid = "36:b9:02:21:08:00";
+            # fake bsside to satisfy module assertion
+            # overided by ddynamicConfigScripts
+            bssid = "00:00:00:00:00:00";
             settings = {
               bridge = "br-lan";
+            };
+            dynamicConfigScripts = {
+              "20-bssidFile" = pkgs.writeShellScript "bssid-file" ''
+                HOSTAPD_CONFIG_FILE=$1
+                grep -v '\s*#' ${lib.escapeShellArg config.sops.secrets.wlan00bssid.path} \
+                  | sed 's/^/bssid=/' >> "$HOSTAPD_CONFIG_FILE"
+              '';
             };
           };
           # working with esp8266 but doesn't work with rpi5
@@ -32,7 +41,9 @@
             authentication = {
               mode = "none"; # this is overriden by settings
             };
-            bssid = "e6:02:43:07:00:00";
+            # fake bsside to satisfy module assertion
+            # overided by ddynamicConfigScripts
+            bssid = "00:00:00:00:00:00";
             settings = {
               bridge = "br-lan";
               wmm_enabled = false;
@@ -42,6 +53,14 @@
               wpa_pairwise = "CCMP";
               wpa_psk_file = config.sops.secrets.legacyWifiPassword.path;
               # sae_require_mfp = false;
+            };
+
+            dynamicConfigScripts = {
+              "20-bssidFile" = pkgs.writeShellScript "bssid-file" ''
+                HOSTAPD_CONFIG_FILE=$1
+                grep -v '\s*#' ${lib.escapeShellArg config.sops.secrets.wlan01bssid.path} \
+                  | sed 's/^/bssid=/' >> "$HOSTAPD_CONFIG_FILE"
+              '';
             };
           };
           # working with rpi5
@@ -144,9 +163,18 @@
               mode = "wpa3-sae";
               saePasswordsFile = config.sops.secrets.wifiPassword.path; # Use saePasswordsFile if possible.
             };
-            bssid = "36:b9:02:21:08:a2";
+            # fake bsside to satisfy module assertion
+            # overided by ddynamicConfigScripts
+            bssid = "00:00:00:00:00:00";
             settings = {
               bridge = "br-lan";
+            };
+            dynamicConfigScripts = {
+              "20-bssidFile" = pkgs.writeShellScript "bssid-file" ''
+                HOSTAPD_CONFIG_FILE=$1
+                grep -v '\s*#' ${lib.escapeShellArg config.sops.secrets.wlan10bssid.path} \
+                  | sed 's/^/bssid=/' >> "$HOSTAPD_CONFIG_FILE"
+              '';
             };
           };
         };
