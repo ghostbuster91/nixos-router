@@ -20,6 +20,7 @@ in
         hostname = "surfer.local";
         user = "root";
         remoteBuild = false;
+        sshOpts = [ "-oControlMaster=no" ];
         profiles.system.path =
           inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.surfer;
       };
