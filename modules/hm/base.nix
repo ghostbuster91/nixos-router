@@ -33,10 +33,6 @@
         unset LD_LIBRARY_PATH
       '';
     };
-    nix-index = {
-      enable = true;
-      enableZshIntegration = true;
-    };
     ssh = {
       enable = true;
       extraConfig = ''
