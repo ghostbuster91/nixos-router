@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     deploy-rs.url = "github:serokell/deploy-rs";
+    devshell.url = "github:numtide/devshell";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -35,7 +40,9 @@
       imports = [
         ./modules
         ./machines
+        ./nix
         inputs.treefmt-nix.flakeModule
+        inputs.devshell.flakeModule
       ];
       perSystem.treefmt = {
         imports = [ ./treefmt.nix ];
