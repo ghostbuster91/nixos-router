@@ -1,5 +1,6 @@
 {
   inputs = {
+    # do not update due to https://github.com/nakato/nixos-sbc/issues/42
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -28,14 +29,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     deploy-rs.url = "github:serokell/deploy-rs";
+    devshell.url = "github:numtide/devshell";
   };
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "aarch64-linux" "x86_64-linux" ];
       imports = [
+        ./nix
         ./modules
         ./machines
         inputs.treefmt-nix.flakeModule
+        inputs.devshell.flakeModule
       ];
       perSystem.treefmt = {
         imports = [ ./treefmt.nix ];
