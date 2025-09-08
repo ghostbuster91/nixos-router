@@ -15,7 +15,9 @@
 
     # No local firewall.
     nat.enable = false;
-    firewall.enable = false;
+    firewall.enable = true;
+
+    nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
     nftables = {
       enable = false;
@@ -97,11 +99,20 @@
       };
     };
   };
+
   services.resolved = {
     enable = true;
-    extraConfig = ''
-      [Resolve]
-      MulticastDNS=yes
-    '';
   };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      userServices = true;
+      domain = true;
+    };
+  };
+
+  services.tailscale.enable = true;
 }

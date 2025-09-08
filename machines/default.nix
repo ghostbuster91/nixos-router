@@ -1,6 +1,7 @@
 { self, inputs, lib, ... }:
 let
   username = "kghost";
+  system = "aarch64-linux";
 in
 {
   flake.nixosConfigurations = {
@@ -8,7 +9,8 @@ in
       lib.nixosSystem {
         modules = [ ./surfer ];
         specialArgs = {
-          inherit inputs; inherit username;
+          inherit username;
+          inherit inputs;
         };
       };
   };
@@ -22,7 +24,7 @@ in
         remoteBuild = false;
         sshOpts = [ "-oControlMaster=no" ];
         profiles.system.path =
-          inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.surfer;
+          inputs.deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.surfer;
       };
     };
 
