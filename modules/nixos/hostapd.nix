@@ -26,6 +26,11 @@
             bssid = "00:00:00:00:00:00";
             settings = {
               bridge = "br-lan";
+              dtim_period = 3;
+              wmm_enabled = true;
+              ieee80211w = "2";
+              ap_max_inactivity = 600;
+              disassoc_low_ack = 0;
             };
             dynamicConfigScripts = {
               "20-bssidFile" = pkgs.writeShellScript "bssid-file" ''
@@ -105,6 +110,10 @@
           operatingChannelWidth = "160";
         };
         settings = {
+          dtim_period = 3;
+          ieee80211w = "2";
+          ap_max_inactivity = 600;
+          disassoc_low_ack = 0;
           # these two are mandatory for wifi 5 & 6 to work
           vht_oper_centr_freq_seg0_idx = 50;
           he_oper_centr_freq_seg0_idx = 50;
