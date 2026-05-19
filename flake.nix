@@ -1,13 +1,13 @@
 {
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     # do not update due to https://github.com/nakato/nixos-sbc/issues/42
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+    nixos-sbc = {
+      url = "github:ghostbuster91/nixos-sbc/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-sbc = {
-      url = "github:nakato/nixos-sbc/main";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {
@@ -18,8 +18,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-index-database.url = "github:Mic92/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";

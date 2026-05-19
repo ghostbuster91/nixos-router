@@ -2,12 +2,20 @@
 let
   username = "kghost";
   system = "aarch64-linux";
+  pkgs = import inputs.nixpkgs {
+    inherit system;
+    config.allowUnfree = true;
+    overlays = [ ];
+  };
 in
 {
   flake.nixosConfigurations = {
     surfer =
       lib.nixosSystem {
-        modules = [ ./surfer ];
+        modules = [
+          { nixpkgs.pkgs = pkgs; }
+          ./surfer
+        ];
         specialArgs = {
           inherit username;
           inherit inputs;
@@ -30,7 +38,7 @@ in
 
   };
 
-  perSystem = { pkgs, lib, system, ... }:
+  perSystem = { lib, system, ... }:
     let
       # Only check the configurations for the current system
       sysConfigs = lib.filterAttrs (_name: value: value.pkgs.system == system) self.nixosConfigurations;
