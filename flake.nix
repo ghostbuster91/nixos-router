@@ -1,4 +1,9 @@
 {
+  nixConfig = {
+    extra-substituters = [ "https://cache.garnix.io" ];
+    extra-trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMi17nQsWZRzCfAY+fdv6OoF2u4xkqv8=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     # do not update due to https://github.com/nakato/nixos-sbc/issues/42
