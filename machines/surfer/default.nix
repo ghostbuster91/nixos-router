@@ -19,13 +19,13 @@
       inputs.self.nixosModules.network
       inputs.self.nixosModules.rpi-builder
       inputs.self.nixosModules.hostapd
-      inputs.home-manager.nixosModule
+      inputs.home-manager.nixosModules.home-manager
 
       inputs.nixos-sbc.nixosModules.default
       inputs.nixos-sbc.nixosModules.boards.bananapi.bpir3
       {
         sbc = {
-          version = "0.2";
+          version = "0.3";
           bootstrap.rootFilesystem = "ext4";
           wireless.wifi.acceptRegulatoryResponsibility = true;
         };

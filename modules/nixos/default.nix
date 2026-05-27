@@ -1,5 +1,6 @@
 {
   flake.nixosModules = {
+    dns = ./dns.nix;
     nixbuild = ./nixbuild.nix;
     hostapd = ./hostapd.nix;
     monitoring = ./monitoring.nix;

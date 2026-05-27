@@ -1,4 +1,4 @@
-{
+{ config, ... }: {
   services.prometheus = {
     exporters = {
       node = {
@@ -36,15 +36,8 @@
       server = {
         disable = true;
       };
-      # positions = {
-      #   filename = "/var/log/positions.yaml";
-      # };
       clients = [{
-        url = "https://loki.local/loki/api/v1/push";
-        # TODO validate against the real certificate
-        # This needs correct Subject Alternative Name to be assigned which needs subdomains 
-        # which needs moving to a public domain
-        tls_config.insecure_skip_verify = true;
+        url = "https://loki.typesafebrew.dev/loki/api/v1/push"; ##TODO
       }];
       scrape_configs = [{
         job_name = "journal";
@@ -52,7 +45,7 @@
           max_age = "12h";
           labels = {
             job = "systemd-journal";
-            host = "surfer";
+            host = config.networking.hostName;
           };
         };
         relabel_configs = [{
