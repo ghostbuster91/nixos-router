@@ -1,5 +1,7 @@
 # My nixos router configuration
 
+[![built with garnix](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fghostbuster91%2Fnixos-router%3Fbranch%3Dmain)](https://garnix.io/repo/ghostbuster91/nixos-router)
+
 ## Performance
 
 wifi 2.4 Ghz
