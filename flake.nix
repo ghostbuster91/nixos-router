@@ -1,7 +1,7 @@
 {
   nixConfig = {
     extra-substituters = [ "https://cache.garnix.io" ];
-    extra-trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMi17nQsWZRzCfAY+fdv6OoF2u4xkqv8=" ];
+    extra-trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
   };
 
   inputs = {
