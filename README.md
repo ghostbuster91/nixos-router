@@ -78,7 +78,7 @@ Build an SD-Image with:
 $ nix build -L '.#nixosConfigurations.bpir3.config.system.build.sdImage'
 ```
 
-At this moment the wifi password is not set because the SD card image does not contain ssh key to decrypt sops secrets. Copy the ssh key and reboot the device.
+At this moment the wifi password is not set because the SD card image does not contain the ssh key that agenix uses to decrypt secrets. Copy `~/.ssh/id_ed25519` for the `kghost` user and reboot the device.
 
 Building using nixbuild remote builder:
 
@@ -88,18 +88,13 @@ $ nixos-rebuild --max-jobs 0  --builders "ssh://eu.nixbuild.net aarch64-linux - 
 
 ## Useful commands
 
-generate age key from ssh using:
+edit or view an agenix-encrypted secret:
 
 ```sh
-$ nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
-
+$ nix run github:ryantm/agenix -- -e secrets/wifiPassword.age
 ```
 
-obtain public key:
-
-```sh
-$ nix-shell -p ssh-to-age --run 'cat ~/.ssh/id_ed25519.pub | ssh-to-age'
-```
+recipients (per-file) are listed in `secrets/secrets.nix`; rekey with `agenix -r` after changing them.
 
 switch configuration:
 

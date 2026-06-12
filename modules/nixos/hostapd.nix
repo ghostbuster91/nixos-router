@@ -19,7 +19,7 @@
             ssid = "koteczkowo5";
             authentication = {
               mode = "wpa3-sae";
-              saePasswordsFile = config.sops.secrets.wifiPassword.path;
+              saePasswordsFile = config.age.secrets.wifiPassword.path;
             };
             # fake bsside to satisfy module assertion
             # overided by ddynamicConfigScripts
@@ -35,7 +35,7 @@
             dynamicConfigScripts = {
               "20-bssidFile" = pkgs.writeShellScript "bssid-file" ''
                 HOSTAPD_CONFIG_FILE=$1
-                grep -v '\s*#' ${lib.escapeShellArg config.sops.secrets.wlan00bssid.path} \
+                grep -v '\s*#' ${lib.escapeShellArg config.age.secrets.wlan00bssid.path} \
                   | sed 's/^/bssid=/' >> "$HOSTAPD_CONFIG_FILE"
               '';
             };
@@ -56,14 +56,14 @@
               wpa = lib.mkForce 2;
               wpa_key_mgmt = "WPA-PSK";
               wpa_pairwise = "CCMP";
-              wpa_psk_file = config.sops.secrets.legacyWifiPassword.path;
+              wpa_psk_file = config.age.secrets.legacyWifiPassword.path;
               # sae_require_mfp = false;
             };
 
             dynamicConfigScripts = {
               "20-bssidFile" = pkgs.writeShellScript "bssid-file" ''
                 HOSTAPD_CONFIG_FILE=$1
-                grep -v '\s*#' ${lib.escapeShellArg config.sops.secrets.wlan01bssid.path} \
+                grep -v '\s*#' ${lib.escapeShellArg config.age.secrets.wlan01bssid.path} \
                   | sed 's/^/bssid=/' >> "$HOSTAPD_CONFIG_FILE"
               '';
             };
@@ -73,8 +73,8 @@
           #   ssid = "koteczkowo3";
           #   authentication = {
           #     mode = "wpa3-sae-transition"; # this is overriden by settings
-          #     wpaPskFile = config.sops.secrets.legacyWifiPassword.path;
-          #     saePasswordsFile = config.sops.secrets.legacyWifiPassword2.path;
+          #     wpaPskFile = config.age.secrets.legacyWifiPassword.path;
+          #     saePasswordsFile = config.age.secrets.legacyWifiPassword2.path;
           #   };
           #   # managementFrameProtection = "optional";
           #   bssid = "e6:02:43:07:00:00";
@@ -170,7 +170,7 @@
             authentication = {
 
               mode = "wpa3-sae";
-              saePasswordsFile = config.sops.secrets.wifiPassword.path; # Use saePasswordsFile if possible.
+              saePasswordsFile = config.age.secrets.wifiPassword.path; # Use saePasswordsFile if possible.
             };
             # fake bsside to satisfy module assertion
             # overided by ddynamicConfigScripts
@@ -181,7 +181,7 @@
             dynamicConfigScripts = {
               "20-bssidFile" = pkgs.writeShellScript "bssid-file" ''
                 HOSTAPD_CONFIG_FILE=$1
-                grep -v '\s*#' ${lib.escapeShellArg config.sops.secrets.wlan10bssid.path} \
+                grep -v '\s*#' ${lib.escapeShellArg config.age.secrets.wlan10bssid.path} \
                   | sed 's/^/bssid=/' >> "$HOSTAPD_CONFIG_FILE"
               '';
             };

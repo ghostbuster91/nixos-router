@@ -4,11 +4,11 @@ This file provides guidance to AI agents when working with code in this reposito
 
 ## Overview
 
-NixOS flake-based router configuration targeting a Banana Pi BPI-R3 (single host named `surfer`, `aarch64-linux`). Acts as a wired+wireless AP using `systemd-networkd` + `hostapd`, with secrets via `sops-nix` and remote builds via `nixbuild.net` or an `rpi5` builder.
+NixOS flake-based router configuration targeting a Banana Pi BPI-R3 (single host named `surfer`, `aarch64-linux`). Acts as a wired+wireless AP using `systemd-networkd` + `hostapd`, with secrets via `agenix` and remote builds via `nixbuild.net` or an `rpi5` builder.
 
 ## Common commands
 
-Build the SD-card image (initial provisioning — note SSH key must be added post-flash so sops can decrypt):
+Build the SD-card image (initial provisioning — note SSH key must be added post-flash so agenix can decrypt):
 ```sh
 nix build -L '.#nixosConfigurations.surfer.config.system.build.sdImage'
 ```
@@ -40,9 +40,9 @@ Flake checks build every `nixosConfigurations.*.system.build.toplevel` for the c
 nix flake check
 ```
 
-Edit/view sops secrets (`.sops.yaml` uses the user's ssh-derived age key):
+Edit/view an agenix-encrypted secret (recipients per file are in `secrets/secrets.nix`):
 ```sh
-sops secrets/secrets.yaml
+nix run github:ryantm/agenix -- -e secrets/<name>.age
 ```
 
 ## Architecture
@@ -55,16 +55,9 @@ Flake composition uses `flake-parts`. Three top-level imports wire the flake tog
 
 Networking (`modules/nixos/network.nix`): a bridge `br-lan` enslaves `lan0..lan3` and `wan` (yes, WAN is currently bridged into the LAN — intentional in this config). `useNetworkd = true`, firewall enabled, NAT disabled, IPv4 forwarding enabled. DNS via `systemd-resolved` + `avahi` mDNS; `tailscale` enabled.
 
-Wireless (`modules/nixos/hostapd.nix`): two radios — `wlan0` (2.4 GHz, WPA3-SAE on `koteczkowo5` + a legacy WPA2-PSK SSID `koteczkowo3` for ESP8266 etc.) and `wlan1` (5 GHz, WPA3-SAE, 160 MHz, Wi-Fi 4/5/6). BSSIDs are not hardcoded: each network defines a placeholder `bssid` plus a `dynamicConfigScripts."20-bssidFile"` that appends the real BSSID from a sops secret at hostapd start (this is how the same config flake can be rebuilt without leaking MACs). When changing wifi networks, both the placeholder and the dynamic script must remain consistent.
+Wireless (`modules/nixos/hostapd.nix`): two radios — `wlan0` (2.4 GHz, WPA3-SAE on `koteczkowo5` + a legacy WPA2-PSK SSID `koteczkowo3` for ESP8266 etc.) and `wlan1` (5 GHz, WPA3-SAE, 160 MHz, Wi-Fi 4/5/6). BSSIDs are not hardcoded: each network defines a placeholder `bssid` plus a `dynamicConfigScripts."20-bssidFile"` that appends the real BSSID from an agenix secret at hostapd start (this is how the same config flake can be rebuilt without leaking MACs). When changing wifi networks, both the placeholder and the dynamic script must remain consistent.
 
-Secrets (`machines/surfer/secrets.nix` + `.sops.yaml`): sops decrypts `secrets/secrets.yaml` using an age key derived from `/home/kghost/.ssh/id_ed25519`. New secrets must be declared in `secrets.nix` AND added to the yaml. To generate the age key from an SSH key:
-```sh
-nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
-```
-Public form for `.sops.yaml`:
-```sh
-nix-shell -p ssh-to-age --run 'cat ~/.ssh/id_ed25519.pub | ssh-to-age'
-```
+Secrets (`machines/surfer/secrets.nix` + `secrets/secrets.nix` + `secrets/*.age`): agenix decrypts each `secrets/<name>.age` at activation time using `/home/kghost/.ssh/id_ed25519` (configured via `age.identityPaths` in `machines/surfer/secrets.nix`). To add a new secret: list it in `secrets/secrets.nix` with the recipient pubkeys, run `nix run github:ryantm/agenix -- -e secrets/<name>.age` to create it, then wire it into `machines/surfer/secrets.nix` under `age.secrets.<name>`.
 
 Remote builders: `modules/nixos/rpi-builder.nix` declares an `rpi5` aarch64 builder over `ssh-ng` (configured in the local `~/.ssh/config`). `modules/nixos/nixbuild.nix` configures `nixbuild.net` substituter trust.
 
