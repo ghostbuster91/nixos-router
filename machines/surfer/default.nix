@@ -9,7 +9,7 @@
       # (import ./disko-config.nix {
       #   disks = [ "/dev/nvme0n1" ];
       # })
-      inputs.sops.nixosModules.default
+      inputs.agenix.nixosModules.default
       ./secrets.nix
       inputs.self.nixosModules.nix
       inputs.self.nixosModules.nixbuild

@@ -101,7 +101,6 @@
     gawk
 
     iw
-    sops
   ];
 
   # replace default editor with neovim
