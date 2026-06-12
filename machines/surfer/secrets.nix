@@ -6,14 +6,18 @@
     defaultSopsFile = ../../secrets/secrets.yaml;
     age.sshKeyPaths = [ "/home/${username}/.ssh/id_ed25519" ];
     age.generateKey = false;
-    secrets = {
-      # This is the actual specification of the secrets.
-      wifiPassword = { };
-      legacyWifiPassword = { };
-      legacyWifiPassword2 = { };
-      wlan00bssid = { };
-      wlan01bssid = { };
-      wlan10bssid = { };
-    };
+    secrets =
+      let
+        hostapd = { restartUnits = [ "hostapd.service" ]; };
+      in
+      {
+        # This is the actual specification of the secrets.
+        wifiPassword = hostapd;
+        legacyWifiPassword = hostapd;
+        legacyWifiPassword2 = hostapd;
+        wlan00bssid = hostapd;
+        wlan01bssid = hostapd;
+        wlan10bssid = hostapd;
+      };
   };
 }
