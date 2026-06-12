@@ -6,7 +6,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    # do not update due to https://github.com/nakato/nixos-sbc/issues/42
     nixos-sbc = {
       url = "github:ghostbuster91/nixos-sbc/main";
       inputs.nixpkgs.follows = "nixpkgs";
